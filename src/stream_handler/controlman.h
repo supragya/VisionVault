@@ -7,4 +7,16 @@
 #ifndef CONTROLMANAGER_H
 #define CONTROLMANAGER_H
 
+
+namespace RawStreamHandler::cm {
+    struct ControlStruct {
+        int ControlWord;
+    }
+
+    void CheckControlStatus();
+
+    void ThreadEntry();
+
+}
+
 #endif

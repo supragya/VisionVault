@@ -7,4 +7,12 @@
 #ifndef FRAMEMANAGER_H
 #define FRAMEMANAGER_H
 
+namespace RawStreamHandler::fm {
+    void Write2Buffer(uint8_t **buf);
+
+    void ReadFromStream();
+
+    void ThreadEntry();
+}
+
 #endif
