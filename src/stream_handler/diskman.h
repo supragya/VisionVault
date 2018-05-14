@@ -1,8 +1,10 @@
 //
-// Created by supragya on 14/5/18.
+// Copyright 2018, Supragya Raj
+// licensed under MIT License (for RawStreamHandler).
 //
+// Synopsis: This file contains the disk management methods (flush to disk operations)
 
-#ifndef FRAMEMANAGER_H
-#define FRAMEMANAGER_H
+#ifndef DISKMANAGER_H
+#define DISKMANAGER_H
 
 #endif

@@ -1,5 +1,7 @@
 //
-// Created by supragya on 14/5/18.
+// Copyright 2018, Supragya Raj
+// licensed under MIT License (for RawStreamHandler).
 //
+
 
 #include "framemanager.h"

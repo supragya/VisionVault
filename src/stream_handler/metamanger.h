@@ -1,8 +1,10 @@
 //
-// Created by supragya on 14/5/18.
+// Copyright 2018, Supragya Raj
+// licensed under MIT License (for RawStreamHandler).
 //
+// Synopsis: This file contains the stream handler for Metadata
 
-#ifndef FRAMEMANAGER_H
-#define FRAMEMANAGER_H
+#ifndef METAMANAGER_H
+#define METAMANAGER_H
 
 #endif
