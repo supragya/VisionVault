@@ -6,7 +6,7 @@
 // TODO: Does using MLV code make us conform to GNU GPLv2 too?
 
 #include <iostream>
-#include <fstream>
+#include <memory.h>
 #include "generator.h"
 #include "../common/mlv.h"
 using namespace std;
@@ -44,51 +44,62 @@ uint8_t* GetRaw12Frame(int type){
 }
 
 int main(){
-    fileStream frameStream("FrameStream.dat", streamType.frame);
+    std::cout.setf( std::ios_base::unitbuf );
+    cout<<"AXIOM STREAM EMULATION: STREAM GENERATOR"<<endl<<endl;
 
     // Begin writing to FrameData
-    cout<<"Begin writing FrameStream "<<endl;
+    cout<<"Step1: Begin writing FrameStream "<<endl;
+    fileStream frameStream("FrameStream.dat", frame);
 
     // MLVI block to begin the frame stream
+    cout<<"Writing mlvi_file_hdr_t ";
     mlv_file_hdr_t mlviHdr;
     Populate(&mlviHdr);
-    frameStream.write2file(reinterpret_cast<void*>(mlviHdr), sizeof(mlviHdr));
+    frameStream.write2file(reinterpret_cast<const char *>(&mlviHdr), sizeof(mlviHdr));
+    cout<<"Done."<<endl;
 
     // RAWI block to set raw mode
+    cout<<"Writing mlvi_rawi_hdr_t ";
     mlv_rawi_hdr_t rawiHdr;
     Populate(&rawiHdr);
-    frameStream.write2file(reinterpret_cast<void*>(rawiHdr), sizeof(rawiHdr));
-    cout<<"Headers written, begin writing frames"<<endl;
+    frameStream.write2file(reinterpret_cast<const char*>(&rawiHdr), sizeof(rawiHdr));
+    cout<<"Done."<<endl;
 
     // Get a few Red/Green/Blue RAW12 frames (synthetic)
+    cout<<"Generating color frames and vidf template ";
     uint8_t *colorFrames[] = {GetRaw12Frame(1), GetRaw12Frame(2), GetRaw12Frame(3)};
     mlv_vidf_hdr_t templateVidf;
     Populate(&templateVidf);
+    cout<<"Done."<<endl;
 
     // Write Frames 300 in number
+    cout<<"Writing Frames to disk"<<endl;
+    int j;
     const int NUM_3FRAMES = 100;
     for(int i=0; i<NUM_3FRAMES;){
         for(int j=0; j<3; j++){
             templateVidf.frameNumber = i*3+j;
             templateVidf.timestamp = i*3+j;
-            frameStream.write2file(templateVidf, sizeof(templateVidf));
-            frameStream.write2file(colorFrames[j], 18*1024*1024);
+            //frameStream.write2file(reinterpret_cast<const char*>(&templateVidf), sizeof(templateVidf));
+            frameStream.write2file(reinterpret_cast<const char*>(colorFrames[j]), 18*1024*1024);
         }
         i++;
-        cout<<"\rProgress:[";
-        for(int j=0; j<i; j = j+NUM_3FRAMES/10)
+        cout<<"\r\tProgress:[";
+
+        for(j=1; j<i; j = j+NUM_3FRAMES/20)
             cout<<'=';
         cout<<'>';
-        for(int j=i+1; j<NUM_3FRAMES; j+=NUM_3FRAMES/10)
-            cout<<'.';
-        cout<<i*100/NUM_3FRAMES<<'%';
+        for(; j<NUM_3FRAMES; j = j+NUM_3FRAMES/20)
+            cout<<' ';
+        cout<<"] "<<i*100/NUM_3FRAMES<<'%'<<" ";
+        cout<<i<<" of "<<NUM_3FRAMES;
     }
     cout<<" Done."<<endl;
 
     // Begin writing metadata
 
     cout<<"Begin writing MetaStream "<<endl;
-    fileStream metaStream("MetaStream.dat", streamType.meta);
+    fileStream metaStream("MetaStream.dat", meta);
 
     return 0;
 }
@@ -114,7 +125,7 @@ void Populate(mlv_rawi_hdr_t* block){
     block->timestamp = 0;
     block->xRes = 4096;
     block->yRes = 3072;
-    block->raw_info = Zeros(sizeof(raw_info_t));
+    Zeros(reinterpret_cast<uint8_t*>(&(block->raw_info)), sizeof(raw_info_t));
 }
 
 void Populate(mlv_vidf_hdr_t* block){
@@ -126,4 +137,9 @@ void Populate(mlv_vidf_hdr_t* block){
     block->cropPosY = 0;
     block->panPosX = 4096;
     block->panPosY = 3072;
+}
+
+void Zeros(uint8_t* loc, uint32_t size){
+    for(uint32_t i = 0; i<size; i++)
+        loc[i] = 0;
 }
