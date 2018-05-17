@@ -24,6 +24,7 @@ uint8_t* GetRaw12Frame(int type){
                 for(int k=0; k<4096/2; k++){
                     rawFrame[curptr++] = type==1 ? 255 : 0;
                     rawFrame[curptr++] = type==1 ? 240 : type == 2? 15 : 0;
+                    rawFrame[curptr++] = type==2 ? 255 : 0;
                 }
             }
             else{
@@ -31,6 +32,7 @@ uint8_t* GetRaw12Frame(int type){
                 for(int k=0; k<4096/2; k++){
                     rawFrame[curptr++] = type==2 ? 255 : 0;
                     rawFrame[curptr++] = type==2 ? 240 : type == 3? 15 : 0;
+                    rawFrame[curptr++] = type==3 ? 255 : 0;
                 }
             }
         }
