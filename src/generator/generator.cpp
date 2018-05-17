@@ -45,7 +45,8 @@ uint8_t* GetRaw12Frame(int type){
 }
 
 int main(){
-    std::cout.setf( std::ios_base::unitbuf );
+    std::cout.setf(std::ios_base::unitbuf);
+
     cout<<"AXIOM STREAM EMULATION: STREAM GENERATOR"<<endl<<endl;
 
     // Begin writing to FrameData
