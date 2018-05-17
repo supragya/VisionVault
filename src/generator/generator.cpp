@@ -10,6 +10,7 @@
 #include "generator.h"
 #include "../common/mlv.h"
 using namespace std;
+const int NUM_3FRAMES = 100;
 
 // Synthetic RAW12 generator
 // type = 1 (red), 2 (green), 3 (blue)
@@ -49,7 +50,7 @@ int main(){
 
     // Begin writing to FrameData
     cout<<"Step1: Begin writing FrameStream "<<endl;
-    fileStream frameStream("FrameStream.dat", frame);
+    fileStream frameStream("FrameStream.dat", false);
 
     // MLVI block to begin the frame stream
     cout<<"Writing mlvi_file_hdr_t ";
@@ -66,41 +67,67 @@ int main(){
     cout<<"Done."<<endl;
 
     // Get a few Red/Green/Blue RAW12 frames (synthetic)
-    cout<<"Generating color frames and vidf template ";
     uint8_t *colorFrames[] = {GetRaw12Frame(1), GetRaw12Frame(2), GetRaw12Frame(3)};
     mlv_vidf_hdr_t templateVidf;
     Populate(&templateVidf);
-    cout<<"Done."<<endl;
 
     // Write Frames 300 in number
     cout<<"Writing Frames to disk"<<endl;
     int j;
-    const int NUM_3FRAMES = 100;
+
     for(int i=0; i<NUM_3FRAMES;){
         for(int j=0; j<3; j++){
             templateVidf.frameNumber = i*3+j;
             templateVidf.timestamp = i*3+j;
-            //frameStream.write2file(reinterpret_cast<const char*>(&templateVidf), sizeof(templateVidf));
+            frameStream.write2file(reinterpret_cast<const char*>(&templateVidf), sizeof(templateVidf));
             frameStream.write2file(reinterpret_cast<const char*>(colorFrames[j]), 18*1024*1024);
         }
         i++;
         cout<<"\r\tProgress:[";
-
         for(j=1; j<i; j = j+NUM_3FRAMES/20)
             cout<<'=';
         cout<<'>';
         for(; j<NUM_3FRAMES; j = j+NUM_3FRAMES/20)
             cout<<' ';
         cout<<"] "<<i*100/NUM_3FRAMES<<'%'<<" ";
-        cout<<i<<" of "<<NUM_3FRAMES;
+        cout<<i*3<<" of "<<NUM_3FRAMES*3;
     }
     cout<<" Done."<<endl;
 
+    cout<<endl;
     // Begin writing metadata
 
-    cout<<"Begin writing MetaStream "<<endl;
-    fileStream metaStream("MetaStream.dat", meta);
+    cout<<"Step2: Begin writing MetaStream "<<endl;
+    fileStream metaStream("MetaStream.dat", true);
 
+    mlv_expo_hdr_t expoHdr;
+    mlv_lens_hdr_t lensHdr;
+    Populate(&expoHdr);
+    Populate(&lensHdr);
+
+    cout<<"Writing Metadata to disk"<<endl;
+    for(int i=0; i<NUM_3FRAMES;){
+        for(int j=0; j<3; j++){
+            expoHdr.timestamp = i*3 + j;
+            lensHdr.timestamp = i*3 + j;
+            metaStream.write2file(reinterpret_cast<const char*>(&expoHdr), sizeof(expoHdr));
+            metaStream.write2file(reinterpret_cast<const char*>(&lensHdr), sizeof(lensHdr));
+        }
+        i++;
+        cout<<"\r\tProgress:[";
+        for(j=1; j<i; j = j+NUM_3FRAMES/20)
+            cout<<'=';
+        cout<<'>';
+        for(; j<NUM_3FRAMES; j = j+NUM_3FRAMES/20)
+            cout<<' ';
+        cout<<"] "<<i*100/NUM_3FRAMES<<'%'<<" ";
+        cout<<i*3<<" of "<<NUM_3FRAMES*3;
+    }
+    cout<<" Done."<<endl;
+
+    cout<<endl;
+
+    cout<<"STREAM GENERATION COMPLETED."<<endl;
     return 0;
 }
 
@@ -137,6 +164,32 @@ void Populate(mlv_vidf_hdr_t* block){
     block->cropPosY = 0;
     block->panPosX = 4096;
     block->panPosY = 3072;
+}
+
+void Populate(mlv_expo_hdr_t* block){
+    memcpy(reinterpret_cast<char *>(&(block->blockType)), "EXPO", 4);
+    block->blockSize = 40;
+    block->timestamp = 0;
+    block->isoMode = 0;
+    block->isoValue = 400;
+    block->isoAnalog = 800;
+    block->digitalGain = 1;
+    block->shutterValue = 250;
+}
+
+void Populate(mlv_lens_hdr_t* block){
+    memcpy(reinterpret_cast<char *>(&(block->blockType)), "LENS", 4);
+    block->blockSize = 96;
+    block->timestamp = 0;
+    block->focalLength = 35;
+    block->focalDist = 65535;
+    block->aperture = 350;
+    block->stabilizerMode = 0;
+    block->autofocusMode = 1;
+    block->flags = 0;
+    block->lensID = 0x4FFAE214;
+    strcpy(reinterpret_cast<char *>(&(block->lensName)), "Tamron Di LD Macro 1:2");
+    strcpy(reinterpret_cast<char *>(&(block->lensSerial)), "TMR_AXFF60213F2");
 }
 
 void Zeros(uint8_t* loc, uint32_t size){
