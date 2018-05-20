@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include "../common/mlv.h"
+#include "buffers.h"
 
 namespace RawStreamHandler {
 
@@ -17,7 +18,7 @@ namespace RawStreamHandler {
         mlv_lens_hdr_t lens;
     };
 
-    void MetaManThreadEntry();
+    void MetaManThreadEntry(RawStreamHandler::rBuf *);
 }
 
 

@@ -13,7 +13,7 @@
 
 using namespace RawStreamHandler;
 
-void MetaManThreadEntry(rBuf globalBuffer) {
+void RawStreamHandler::MetaManThreadEntry(rBuf *globalBuffer) {
     const char *metaLoc = "";
     axiomMeta metaBlock;
 
@@ -28,7 +28,7 @@ void MetaManThreadEntry(rBuf globalBuffer) {
     auto start = std::chrono::system_clock::now();
     while (!mFile.eof()) {
         mFile.read(reinterpret_cast<char *>(&metaBlock), sizeof(metaBlock));
-        globalBuffer.pushData(MetaBuf, reinterpret_cast<uint8_t *>(&metaBlock), sizeof(metaBlock));
+        globalBuffer->pushData(MetaBuf, reinterpret_cast<uint8_t *>(&metaBlock), sizeof(metaBlock));
         ctr++;
     }
     auto end = std::chrono::system_clock::now();

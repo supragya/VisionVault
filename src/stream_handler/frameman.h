@@ -9,6 +9,7 @@
 
 #include <cstdint>
 #include "../common/mlv.h"
+#include "buffers.h"
 #include <fstream>
 
 namespace RawStreamHandler {
@@ -18,7 +19,7 @@ namespace RawStreamHandler {
         uint8_t reserved[4]; // Other things that come along, eg. markers
     };
 
-    void FrameManThreadEntry();
+    void FrameManThreadEntry(RawStreamHandler::rBuf *);
 }
 
 #endif

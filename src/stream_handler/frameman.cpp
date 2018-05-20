@@ -12,7 +12,7 @@
 
 using namespace RawStreamHandler;
 
-void FrameManThreadEntry(rBuf globalBuffer) {
+void RawStreamHandler::FrameManThreadEntry(rBuf *globalBuffer) {
     const char *frameLoc = "";
     axiomFrames frameBlock;
 
@@ -27,7 +27,7 @@ void FrameManThreadEntry(rBuf globalBuffer) {
     auto start = std::chrono::system_clock::now();
     while (!fFile.eof()) {
         fFile.read(reinterpret_cast<char *>(&frameBlock), sizeof(frameBlock));
-        globalBuffer.pushData(MetaBuf, reinterpret_cast<uint8_t *>(&frameBlock), sizeof(frameBlock));
+        globalBuffer->pushData(MetaBuf, reinterpret_cast<uint8_t *>(&frameBlock), sizeof(frameBlock));
         ctr++;
     }
     auto end = std::chrono::system_clock::now();

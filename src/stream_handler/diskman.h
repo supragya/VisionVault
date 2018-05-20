@@ -12,14 +12,11 @@
 
 namespace RawStreamHandler {
 
-    uint8_t *writeSpace;
-    long writeOffset;
+    void DiskMan(rBuf *globalBuffer, char *buf, long *offset);
 
-    void DiskMan(rBuf globalBuffer);
+    int DiskAppend(char *data, long len, char *buf, long *offset);
 
-    int DiskAppend(char *data, long len);
-
-    void DiskManagerThreadEntry(long writeLenTemp);
+    void DiskManagerThreadEntry(RawStreamHandler::rBuf *);
 }
 
 #endif

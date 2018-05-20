@@ -29,8 +29,8 @@ namespace RawStreamHandler {
         bool frameFlushable[2];
         bool metaFlushable[2];
 
-        char *frameBuf[];
-        char *metaBuf[];
+        char *frameBuf[2];
+        char *metaBuf[2];
 
         int bufInit() {
             frameBuf[0] = new char[FRAME_BUFFER_SIZE];
