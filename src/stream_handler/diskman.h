@@ -10,8 +10,14 @@
 #include <iostream>
 
 namespace RawStreamHandler::dm {
+
+    uint8_t *writeSpace;
+
     void DiskMan();
-    void ThreadEntry();
+
+    int DiskAppend(uint8_t *data, long len);
+
+    void ThreadEntry(long writeLenTemp);
 }
 
 #endif

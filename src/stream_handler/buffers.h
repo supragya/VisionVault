@@ -19,6 +19,7 @@ namespace RawStreamHandler {
     };
 
     class rBuf {
+    public:
         static std::mutex frameMutex[2];
         static std::mutex metaMutex[2];
 
@@ -33,8 +34,9 @@ namespace RawStreamHandler {
 
         int aux_push(uint8_t *buf, uint8_t *data, long len);
 
-    public:
         int bufInit();
+
+        int bufEnd();
 
         int pushData(bufType type, uint8_t *data, long len);
 
