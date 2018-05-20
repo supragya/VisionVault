@@ -4,3 +4,10 @@
 //
 
 #include "diskman.h"
+#include "buffer.h"
+
+using namespace RawStreamHandler;
+
+void dm::DiskMan() {
+
+}
