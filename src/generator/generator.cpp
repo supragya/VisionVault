@@ -10,7 +10,7 @@
 #include "generator.h"
 #include "../common/mlv.h"
 using namespace std;
-const int NUM_3FRAMES = 100;
+const int NUM_3FRAMES = 10;
 
 // Synthetic RAW12 generator
 // type = 1 (red), 2 (green), 3 (blue)
@@ -84,13 +84,8 @@ int main(){
             frameStream.write2file(reinterpret_cast<const char*>(colorFrames[j]), 18*1024*1024);
         }
         i++;
-        cout<<"\r\tProgress:[";
-        for(j=1; j<i; j = j+NUM_3FRAMES/20)
-            cout<<'=';
-        cout<<'>';
-        for(; j<NUM_3FRAMES; j = j+NUM_3FRAMES/20)
-            cout<<' ';
-        cout<<"] "<<i*100/NUM_3FRAMES<<'%'<<" ";
+        cout << "\r\tProgress: ";
+        cout << i * 100 / NUM_3FRAMES << '%' << " ";
         cout<<i*3<<" of "<<NUM_3FRAMES*3;
     }
     cout<<" Done."<<endl;
@@ -115,13 +110,8 @@ int main(){
             metaStream.write2file(reinterpret_cast<const char*>(&lensHdr), sizeof(lensHdr));
         }
         i++;
-        cout<<"\r\tProgress:[";
-        for(j=1; j<i; j = j+NUM_3FRAMES/20)
-            cout<<'=';
-        cout<<'>';
-        for(; j<NUM_3FRAMES; j = j+NUM_3FRAMES/20)
-            cout<<' ';
-        cout<<"] "<<i*100/NUM_3FRAMES<<'%'<<" ";
+        cout << "\r\tProgress: ";
+        cout << i * 100 / NUM_3FRAMES << '%' << " ";
         cout<<i*3<<" of "<<NUM_3FRAMES*3;
     }
     cout<<" Done."<<endl;

@@ -13,7 +13,7 @@
 using namespace RawStreamHandler;
 
 void RawStreamHandler::FrameManThreadEntry(rBuf *globalBuffer) {
-    const char *frameLoc = "";
+    const char *frameLoc = "/tmp/rvcfFrameStream/frameStream";
     axiomFrames frameBlock;
 
     std::ifstream fFile(frameLoc);

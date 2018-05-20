@@ -14,7 +14,7 @@
 using namespace RawStreamHandler;
 
 void RawStreamHandler::MetaManThreadEntry(rBuf *globalBuffer) {
-    const char *metaLoc = "";
+    const char *metaLoc = "/tmp/rvcfMetaStream/metaStream";
     axiomMeta metaBlock;
 
     std::ifstream mFile(metaLoc);
