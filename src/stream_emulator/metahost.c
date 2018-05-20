@@ -45,7 +45,7 @@ void load2memory(const char *fileName) {
 
 int main(int argc, char *argv[]) {
     // Begin LibFUSE, register the functions with libfuse by sending function references
-    printf("FrameStream emulator: Loading to memory\n");
+    printf("FrameStream emulator running\n");
     load2memory(INPUT_FILE);
     return fuse_main(argc, argv, &fuse_example_operations, NULL);
 }
