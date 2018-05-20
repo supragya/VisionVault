@@ -7,17 +7,19 @@
 #ifndef DISKMANAGER_H
 #define DISKMANAGER_H
 
+#include "buffers.h"
 #include <iostream>
 
-namespace RawStreamHandler::dm {
+namespace RawStreamHandler {
 
     uint8_t *writeSpace;
+    long writeOffset;
 
-    void DiskMan();
+    void DiskMan(rBuf globalBuffer);
 
-    int DiskAppend(uint8_t *data, long len);
+    int DiskAppend(char *data, long len);
 
-    void ThreadEntry(long writeLenTemp);
+    void DiskManagerThreadEntry(long writeLenTemp);
 }
 
 #endif

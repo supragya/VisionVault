@@ -20,27 +20,41 @@ namespace RawStreamHandler {
 
     class rBuf {
     public:
-        static std::mutex frameMutex[2];
-        static std::mutex metaMutex[2];
+        std::mutex frameMutex[2];
+        std::mutex metaMutex[2];
 
-        static long frameOffset[2];
-        static long metaOffset[2];
+        long frameOffset[2];
+        long metaOffset[2];
 
-        static bool frameFlushable[2];
-        static bool metaFlushable[2];
+        bool frameFlushable[2];
+        bool metaFlushable[2];
 
-        static uint8_t *frameBuf[] = {new uint8_t[FRAME_BUFFER_SIZE], new uint8_t[FRAME_BUFFER_SIZE]};
-        static uint8_t *metaBuf[] = {new uint8_t[META_BUFFER_SIZE], new uint8_t[META_BUFFER_SIZE]};
+        char *frameBuf[];
+        char *metaBuf[];
 
-        int aux_push(uint8_t *buf, uint8_t *data, long len);
+        int bufInit() {
+            frameBuf[0] = new char[FRAME_BUFFER_SIZE];
+            frameBuf[1] = new char[FRAME_BUFFER_SIZE];
 
-        int bufInit();
+            metaBuf[0] = new char[META_BUFFER_SIZE];
+            metaBuf[1] = new char[FRAME_BUFFER_SIZE];
 
-        int bufEnd();
+            frameOffset[0] = frameOffset[1] = 0;
+            metaOffset[0] = metaOffset[1] = 0;
+
+            frameFlushable[0] = frameFlushable[1] = false;
+            metaFlushable[0] = metaFlushable[1] = false;
+        }
+
+        int bufEnd() {
+            delete frameBuf[0];
+            delete frameBuf[1];
+            delete metaBuf[0];
+            delete metaBuf[1];
+        }
 
         int pushData(bufType type, uint8_t *data, long len);
 
-        friend void dm::diskMan();
     };
 }
 

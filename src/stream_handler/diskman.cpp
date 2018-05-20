@@ -4,49 +4,51 @@
 //
 
 #include "diskman.h"
-#include "buffers.h"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
 
 using namespace RawStreamHandler;
 
-void dm::DiskMan() {
+void DiskMan(rBuf globalBuffer) {
     while (true) {
         // Check if frameBuf needs a dump
 
         for (int i = 0; i < 2; i++) {
-            if (rBuf.frameFlushable[i]) {
+            if (globalBuffer.frameFlushable[i]) {
                 // Lock mutex
-                rBuf.frameMutex[i].lock();
+                globalBuffer.frameMutex[i].lock();
 
-                if (dm::DiskAppend(rBuf.frameBuf[i], frameOffset[i])) {
-                    rBuf.frameOffset[i] = 0;
-                    rBuf.frameFlushable[i] = false;
+                if (DiskAppend(globalBuffer.frameBuf[i], globalBuffer.frameOffset[i])) {
+                    globalBuffer.frameOffset[i] = 0;
+                    globalBuffer.frameFlushable[i] = false;
                 }
 
                 // Unlock mutex
-                rBuf.frameMutex[i].unlock();
+                globalBuffer.frameMutex[i].unlock();
             }
         }
 
         // Check if metaBuf needs a dump
 
         for (int i = 0; i < 2; i++) {
-            if (rBuf.metaFlushable[i]) {
+            if (globalBuffer.metaFlushable[i]) {
                 // Lock mutex
-                rBuf.metaMutex[i].lock();
+                globalBuffer.metaMutex[i].lock();
 
-                if (dm::DiskAppend(rBuf.metaBuf[i], metaOffset[i])) {
-                    rBuf.metaOffset[i] = 0;
-                    rBuf.metaFlushable[i] = false;
+                if (DiskAppend(globalBuffer.metaBuf[i], globalBuffer.metaOffset[i])) {
+                    globalBuffer.metaOffset[i] = 0;
+                    globalBuffer.metaFlushable[i] = false;
                 }
 
                 // Unlock mutex
-                rBuf.metaMutex[i].unlock();
+                globalBuffer.metaMutex[i].unlock();
             }
         }
 
     }
 }
 
-void dm::DiskAppend(uint8_t *data, long len) {
-
+int RawStreamHandler::DiskAppend(char *data, long len) {
+    return 0;
 }

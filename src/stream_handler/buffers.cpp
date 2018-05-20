@@ -5,11 +5,11 @@
 // TODO: Simplify
 
 #include "buffers.h"
-#include <thread>
+#include <memory.h>
 
 using namespace RawStreamHandler;
 
-int rBuf::pushData(RawStreamHandler::bufType type, uint8_t *data, long len) {
+int rBuf::pushData(bufType type, uint8_t *data, long len) {
     bool flushSuccess = false;
     switch (type) {
         case FrameBuf:
@@ -54,13 +54,13 @@ int rBuf::pushData(RawStreamHandler::bufType type, uint8_t *data, long len) {
                     // and all frame data push are equal sized, cleaning this buffer makes sense
                 }
 
-                frameBuf[1].unlock();
+                frameMutex[1].unlock();
             }
             if (flushSuccess == false)
                 return 1; // Because both the frames are to be flushed and we have no space to put new data
             break;
 
-        case metaBuf:
+        case MetaBuf:
             if (len > META_BUFFER_SIZE)
                 return 1; // Because the amount of data we receive cannot be flushed into a single meta
 
@@ -111,6 +111,3 @@ int rBuf::pushData(RawStreamHandler::bufType type, uint8_t *data, long len) {
     if (flushSuccess == true)
         return 0;
 }
-
-
-#define

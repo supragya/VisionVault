@@ -7,12 +7,18 @@
 #ifndef FRAMEMANAGER_H
 #define FRAMEMANAGER_H
 
-namespace RawStreamHandler::fm {
-    void Write2Buffer(uint8_t **buf);
+#include <cstdint>
+#include "../common/mlv.h"
+#include <fstream>
 
-    void ReadFromStream();
+namespace RawStreamHandler {
 
-    void ThreadEntry();
+    struct axiomFrames {
+        mlv_vidf_hdr_t vidf;
+        uint8_t reserved[4]; // Other things that come along, eg. markers
+    };
+
+    void FrameManThreadEntry();
 }
 
 #endif

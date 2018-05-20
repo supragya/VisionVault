@@ -7,12 +7,17 @@
 #ifndef METAMANAGER_H
 #define METAMANAGER_H
 
-namespace RawStreamHandler::mm {
-    void Write2Buffer(uint8_t **buf);
+#include <iostream>
+#include "../common/mlv.h"
 
-    void ReadFromStream();
+namespace RawStreamHandler {
 
-    void ThreadEntry();
+    struct axiomMeta {
+        mlv_expo_hdr_t expo;
+        mlv_lens_hdr_t lens;
+    };
+
+    void MetaManThreadEntry();
 }
 
 

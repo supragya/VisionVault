@@ -1,4 +1,4 @@
 cmake_minimum_required(VERSION 3.1)
-project(generator)
+project(Generator)
 
-add_executable(generator generator.cpp generator.h ../common/mlv.h)
+add_executable(Generator generator.cpp generator.h ../common/mlv.h)

@@ -21,6 +21,8 @@
 #ifndef _mlv_h_
 #define _mlv_h_
 
+#include <fstream>
+
 #define MLV_VERSION_STRING "v2.0"
 #define MLV_VIDEO_CLASS_RAW          0x01
 #define MLV_VIDEO_CLASS_YUV          0x02

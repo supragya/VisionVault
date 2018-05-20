@@ -11,7 +11,7 @@
 namespace RawStreamHandler::cm {
     struct ControlStruct {
         int ControlWord;
-    }
+    };
 
     void CheckControlStatus();
 
