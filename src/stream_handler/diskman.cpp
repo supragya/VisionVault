@@ -4,14 +4,11 @@
 //
 
 #include "diskman.h"
-#include <memory.h>
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
 
-using namespace RawStreamHandler;
-
-void RawStreamHandler::DiskMan(RawStreamHandler::rBuf *globalBuffer, char *buf, long *offset) {
+void RawStreamHandler::DiskMan(RawStreamHandler::rBuf *globalBuffer, std::ofstream *cacheFile) {
     while (true) {
         // Check if frameBuf needs a dump
 
@@ -20,7 +17,7 @@ void RawStreamHandler::DiskMan(RawStreamHandler::rBuf *globalBuffer, char *buf, 
                 // Lock mutex
                 globalBuffer->frameMutex[i].lock();
 
-                if (DiskAppend(globalBuffer->frameBuf[i], globalBuffer->frameOffset[i], buf, offset)) {
+                if (DiskAppend(globalBuffer->frameBuf[i], globalBuffer->frameOffset[i], cacheFile)) {
                     globalBuffer->frameOffset[i] = 0;
                     globalBuffer->frameFlushable[i] = false;
                 }
@@ -37,7 +34,7 @@ void RawStreamHandler::DiskMan(RawStreamHandler::rBuf *globalBuffer, char *buf, 
                 // Lock mutex
                 globalBuffer->metaMutex[i].lock();
 
-                if (DiskAppend(globalBuffer->metaBuf[i], globalBuffer->metaOffset[i], buf, offset)) {
+                if (DiskAppend(globalBuffer->metaBuf[i], globalBuffer->metaOffset[i], cacheFile)) {
                     globalBuffer->metaOffset[i] = 0;
                     globalBuffer->metaFlushable[i] = false;
                 }
@@ -50,14 +47,18 @@ void RawStreamHandler::DiskMan(RawStreamHandler::rBuf *globalBuffer, char *buf, 
     }
 }
 
-int RawStreamHandler::DiskAppend(char *data, long len, char *buf, long *offset) {
-    memcpy(reinterpret_cast<void *>(buf + *offset), data, len);
-    *offset += len;
+int RawStreamHandler::DiskAppend(char *data, long len, std::ofstream *cacheFile) {
+    std::cout << "DiskAppend called with tellp: " << cacheFile->tellp() << std::endl;
+    cacheFile->write(data, len);
     return 0;
 }
 
 void RawStreamHandler::DiskManagerThreadEntry(RawStreamHandler::rBuf *globalBuffer) {
-    char *writeSpace = new char[3l * 1024 * 1024 * 1024]; // 3GB ;
-    long writeOffset = 0;
-    DiskMan(globalBuffer, writeSpace, &writeOffset);
+    std::ofstream diskCache;
+    diskCache.open("cache.mlv", std::ios::trunc);
+    if (!diskCache) {
+        std::cout << "Error while opening cache.mlv, exiting the application." << std::endl;
+        exit(1);
+    }
+    DiskMan(globalBuffer, &diskCache);
 }

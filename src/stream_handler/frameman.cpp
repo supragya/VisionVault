@@ -19,7 +19,7 @@ void RawStreamHandler::FrameManThreadEntry(rBuf *globalBuffer) {
     std::ifstream fFile(frameLoc);
 
     if (!fFile.is_open()) {
-        std::cout << "Meta Stream unavailable. Exiting" << std::endl;
+        std::cout << "Frame Stream unavailable. Exiting" << std::endl;
         exit(0);
     }
 

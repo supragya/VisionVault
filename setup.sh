@@ -33,8 +33,8 @@ sudo rm -r /tmp/rvcfFrameStream/
 sudo rm -r /tmp/rvcfMetaStream/
 mkdir /tmp/rvcfFrameStream/
 mkdir /tmp/rvcfMetaStream/
-deepin-terminal -e ./Framestream_emulator -d -s -f /tmp/rvcfFrameStream/ &
-deepin-terminal -e ./Metastream_emulator -d -s -f /tmp/rvcfMetaStream/ &
+sudo deepin-terminal -e ./Framestream_emulator -d -s -f /tmp/rvcfFrameStream/ &
+sudo deepin-terminal -e ./Metastream_emulator -d -s -f /tmp/rvcfMetaStream/ &
 
 
 

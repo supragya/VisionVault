@@ -9,12 +9,13 @@
 
 #include "buffers.h"
 #include <iostream>
+#include <fstream>
 
 namespace RawStreamHandler {
 
-    void DiskMan(rBuf *globalBuffer, char *buf, long *offset);
+    void DiskMan(rBuf *globalBuffer, std::ofstream *cacheFile);
 
-    int DiskAppend(char *data, long len, char *buf, long *offset);
+    int DiskAppend(char *data, long len, std::ofstream *cacheFile);
 
     void DiskManagerThreadEntry(RawStreamHandler::rBuf *);
 }
