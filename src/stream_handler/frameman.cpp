@@ -23,13 +23,14 @@ void RawStreamHandler::FrameManEntry(const char* frameStreamLoc, const char* fra
 
     StreamHandler.join();
     DiskHandler.join();
+    std::cout<<"FrameStreamHandler done"<<std::endl;
 }
 
 void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, const char *streamloc) {
     int exit_reason = 0;
     // Reasons: noFileStream(0), syncbool(1), endofstream(2)
 
-    std::ifstream fStream(streamloc);
+    std::ifstream fStream(streamloc, std::ios::binary);
 
     if (!fStream.is_open()) {
         *syncbool = false;
@@ -97,7 +98,7 @@ void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const 
     int exit_reason = 0;
     // Reasons: noFileStream(0), syncbool(1), endofstream(2)
 
-    std::ofstream fStream(dumploc);
+    std::ofstream fStream(dumploc, std::ios::binary);
 
     if (!fStream.is_open()) {
         exit_reason = 0;
