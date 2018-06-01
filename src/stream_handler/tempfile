@@ -1,0 +1,136 @@
+//
+// Copyright 2018, Supragya Raj
+// licensed under MIT License (for RawStreamHandler).
+//
+
+#include "frameman.h"
+#include "buffers.h"
+#include <stdlib.h>
+#include <iostream>
+#include <fstream>
+#include <chrono>
+
+using namespace RawStreamHandler;
+
+void RawStreamHandler::FrameManThreadEntry(rBuf *globalBuffer) {
+    const char *frameLoc = "/tmp/rvcfFrameStream/frameStream";
+    axiomFrames frameBlock;
+
+    std::ifstream fFile(frameLoc);
+
+    if (!fFile.is_open()) {
+        std::cout << "Frame Stream unavailable. Exiting" << std::endl;
+        exit(0);
+    }
+
+    int ctr = 0;
+    auto start = std::chrono::system_clock::now();
+    while (!fFile.eof()) {
+        fFile.read(reinterpret_cast<char *>(&frameBlock), sizeof(frameBlock));
+        globalBuffer->pushData(MetaBuf, reinterpret_cast<uint8_t *>(&frameBlock), sizeof(frameBlock));
+        ctr++;
+    }
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_second_ = end - start;
+
+    double elapsed_second = elapsed_second_.count() / ctr;
+
+    std::cout << "Frame time per frame: " << elapsed_second << ", max: " << 1 / elapsed_second << " per second"
+              << std::endl;
+}
+
+//
+// Copyright 2018, Supragya Raj
+// licensed under MIT License (for RawStreamHandler).
+//
+
+
+#include "metaman.h"
+#include "buffers.h"
+#include <stdlib.h>
+#include <iostream>
+#include <fstream>
+#include <chrono>
+
+using namespace RawStreamHandler;
+
+void RawStreamHandler::MetaManThreadEntry(rBuf *globalBuffer) {
+    const char *metaLoc = "/tmp/rvcfMetaStream/metaStream";
+    axiomMeta metaBlock;
+
+    std::ifstream mFile(metaLoc);
+
+    if (!mFile.is_open()) {
+        std::cout << "Meta Stream unavailable. Exiting" << std::endl;
+        exit(0);
+    }
+
+    int ctr = 0;
+    auto start = std::chrono::system_clock::now();
+    while (!mFile.eof()) {
+        mFile.read(reinterpret_cast<char *>(&metaBlock), sizeof(metaBlock));
+        globalBuffer->pushData(MetaBuf, reinterpret_cast<uint8_t *>(&metaBlock), sizeof(metaBlock));
+        ctr++;
+    }
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_second_ = end - start;
+
+    double elapsed_second = elapsed_second_.count() / ctr;
+
+    std::cout << "Meta time per frame: " << elapsed_second << ", max: " << 1 / elapsed_second << " per second"
+              << std::endl;
+}
+
+
+//
+// Copyright 2018, Supragya Raj
+// licensed under MIT License (for RawStreamHandler).
+//
+// Synopsis: This file contains the stream handler for RAW frame inputs
+
+#ifndef FRAMEMANAGER_H
+#define FRAMEMANAGER_H
+
+#include <cstdint>
+#include "../common/mlv.h"
+#include "buffers.h"
+#include <fstream>
+
+namespace RawStreamHandler {
+
+    struct axiomFrames {
+        mlv_vidf_hdr_t vidf;
+        uint8_t reserved[4]; // Other things that come along, eg. markers
+    };
+
+    void FrameManThreadEntry(RawStreamHandler::rBuf *);
+}
+
+#endif
+
+
+//
+// Copyright 2018, Supragya Raj
+// licensed under MIT License (for RawStreamHandler).
+//
+// Synopsis: This file contains the stream handler for Metadata
+
+#ifndef METAMANAGER_H
+#define METAMANAGER_H
+
+#include <iostream>
+#include "../common/mlv.h"
+#include "buffers.h"
+
+namespace RawStreamHandler {
+
+    struct axiomMeta {
+        mlv_expo_hdr_t expo;
+        mlv_lens_hdr_t lens;
+    };
+
+    void MetaManThreadEntry(RawStreamHandler::rBuf *);
+}
+
+
+#endif

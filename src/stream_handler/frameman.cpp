@@ -1,40 +1,30 @@
-//
-// Copyright 2018, Supragya Raj
-// licensed under MIT License (for RawStreamHandler).
-//
-
+#include "../common/mlv.h"
 #include "frameman.h"
-#include "buffers.h"
-#include <stdlib.h>
-#include <iostream>
-#include <fstream>
-#include <chrono>
+#include <thread>
 
 using namespace RawStreamHandler;
 
-void RawStreamHandler::FrameManThreadEntry(rBuf *globalBuffer) {
-    const char *frameLoc = "/tmp/rvcfFrameStream/frameStream";
-    axiomFrames frameBlock;
+void RawStreamHandler::FrameManEntry() {
+    // Create new struct
+    FrameBuffer fb;
+    fb.bufsize = 128 * 1024 * 1024; // 128MB
+    fb.buf[0] = new char[fb.bufsize];
+    fb.buf[1] = new char[fb.bufsize];
+    fb.filled[0] = fb.filled[1] = false;
+    fb.offset[0] = fb.offset[1] = 0;
 
-    std::ifstream fFile(frameLoc);
+    bool syncbool = true;
+    std::thread StreamHandler(FrameStreamHandler, &syncbool, &fb, "/tmp/.../");
+    std::thread DiskHandler(FrameDiskHandler, &syncbool, &fb, "frameDump.dat");
 
-    if (!fFile.is_open()) {
-        std::cout << "Frame Stream unavailable. Exiting" << std::endl;
-        exit(0);
-    }
+    StreamHandler.join();
+    DiskHandler.join();
+}
 
-    int ctr = 0;
-    auto start = std::chrono::system_clock::now();
-    while (!fFile.eof()) {
-        fFile.read(reinterpret_cast<char *>(&frameBlock), sizeof(frameBlock));
-        globalBuffer->pushData(MetaBuf, reinterpret_cast<uint8_t *>(&frameBlock), sizeof(frameBlock));
-        ctr++;
-    }
-    auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_second_ = end - start;
+void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, const char *streamloc) {
+    return;
+}
 
-    double elapsed_second = elapsed_second_.count() / ctr;
-
-    std::cout << "Frame time per frame: " << elapsed_second << ", max: " << 1 / elapsed_second << " per second"
-              << std::endl;
+void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const char *dumploc){
+    return;
 }

@@ -1,25 +1,22 @@
-//
-// Copyright 2018, Supragya Raj
-// licensed under MIT License (for RawStreamHandler).
-//
-// Synopsis: This file contains the stream handler for RAW frame inputs
+#ifndef RVCF_FRAME_H
+#define RVCF_FRAME_H
 
-#ifndef FRAMEMANAGER_H
-#define FRAMEMANAGER_H
-
-#include <cstdint>
-#include "../common/mlv.h"
-#include "buffers.h"
-#include <fstream>
+#include <mutex>
 
 namespace RawStreamHandler {
-
-    struct axiomFrames {
-        mlv_vidf_hdr_t vidf;
-        uint8_t reserved[4]; // Other things that come along, eg. markers
+    struct FrameBuffer {
+        char *buf[2];
+        uint bufsize;
+        bool filled[2];
+        uint offset[2];
+        std::mutex mutex[2];
     };
 
-    void FrameManThreadEntry(RawStreamHandler::rBuf *);
+    void FrameManEntry();
+
+    void FrameStreamHandler(bool *syncbool, FrameBuffer *buf, const char *streamloc);
+
+    void FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const char *dumploc);
 }
 
 #endif
