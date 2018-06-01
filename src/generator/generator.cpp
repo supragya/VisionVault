@@ -8,117 +8,15 @@
 #include <iostream>
 #include <memory.h>
 #include "generator.h"
-#include "../common/mlv.h"
+
 using namespace std;
-const int NUM_3FRAMES = 10;
-
-// Synthetic RAW12 generator
-// type = 1 (red), 2 (green), 3 (blue)
-uint8_t* GetRaw12Frame(int type){
-    uint8_t* rawFrame = new uint8_t[18*1024*1024];
-
-    // Using RGGB pattern
-    int curptr = 0;
-    for(int i = 0; i<3072/2; i++){
-        // All row pairs of sensel data
-        for(int j=0; j<2; j++){
-            if(j == 0){
-                // Odd row
-                for(int k=0; k<4096/2; k++){
-                    rawFrame[curptr++] = type==1 ? 255 : 0;
-                    rawFrame[curptr++] = type==1 ? 240 : type == 2? 15 : 0;
-                    rawFrame[curptr++] = type==2 ? 255 : 0;
-                }
-            }
-            else{
-                // Even row
-                for(int k=0; k<4096/2; k++){
-                    rawFrame[curptr++] = type==2 ? 255 : 0;
-                    rawFrame[curptr++] = type==2 ? 240 : type == 3? 15 : 0;
-                    rawFrame[curptr++] = type==3 ? 255 : 0;
-                }
-            }
-        }
-    }
-
-    return rawFrame;
-}
 
 int main(){
-    std::cout.setf(std::ios_base::unitbuf);
+    cout.setf(std::ios_base::unitbuf);
+    cout<<"Axiom Stream Generator"<<endl;
 
-    cout<<"AXIOM STREAM EMULATION: STREAM GENERATOR"<<endl<<endl;
 
-    // Begin writing to FrameData
-    cout<<"Step1: Begin writing FrameStream "<<endl;
-    fileStream frameStream("FrameStream.dat", false);
 
-    // MLVI block to begin the frame stream
-    cout<<"Writing mlvi_file_hdr_t ";
-    mlv_file_hdr_t mlviHdr;
-    Populate(&mlviHdr);
-    frameStream.write2file(reinterpret_cast<const char *>(&mlviHdr), sizeof(mlviHdr));
-    cout<<"Done."<<endl;
-
-    // RAWI block to set raw mode
-    cout<<"Writing mlvi_rawi_hdr_t ";
-    mlv_rawi_hdr_t rawiHdr;
-    Populate(&rawiHdr);
-    frameStream.write2file(reinterpret_cast<const char*>(&rawiHdr), sizeof(rawiHdr));
-    cout<<"Done."<<endl;
-
-    // Get a few Red/Green/Blue RAW12 frames (synthetic)
-    uint8_t *colorFrames[] = {GetRaw12Frame(1), GetRaw12Frame(2), GetRaw12Frame(3)};
-    mlv_vidf_hdr_t templateVidf;
-    Populate(&templateVidf);
-
-    // Write Frames 300 in number
-    cout<<"Writing Frames to disk"<<endl;
-    int j;
-
-    for(int i=0; i<NUM_3FRAMES;){
-        for(int j=0; j<3; j++){
-            templateVidf.frameNumber = i*3+j;
-            templateVidf.timestamp = i*3+j;
-            frameStream.write2file(reinterpret_cast<const char*>(&templateVidf), sizeof(templateVidf));
-            frameStream.write2file(reinterpret_cast<const char*>(colorFrames[j]), 18*1024*1024);
-        }
-        i++;
-        cout << "\r\tProgress: ";
-        cout << i * 100 / NUM_3FRAMES << '%' << " ";
-        cout<<i*3<<" of "<<NUM_3FRAMES*3;
-    }
-    cout<<" Done."<<endl;
-
-    cout<<endl;
-    // Begin writing metadata
-
-    cout<<"Step2: Begin writing MetaStream "<<endl;
-    fileStream metaStream("MetaStream.dat", true);
-
-    mlv_expo_hdr_t expoHdr;
-    mlv_lens_hdr_t lensHdr;
-    Populate(&expoHdr);
-    Populate(&lensHdr);
-
-    cout<<"Writing Metadata to disk"<<endl;
-    for(int i=0; i<NUM_3FRAMES;){
-        for(int j=0; j<3; j++){
-            expoHdr.timestamp = i*3 + j;
-            lensHdr.timestamp = i*3 + j;
-            metaStream.write2file(reinterpret_cast<const char*>(&expoHdr), sizeof(expoHdr));
-            metaStream.write2file(reinterpret_cast<const char*>(&lensHdr), sizeof(lensHdr));
-        }
-        i++;
-        cout << "\r\tProgress: ";
-        cout << i * 100 / NUM_3FRAMES << '%' << " ";
-        cout<<i*3<<" of "<<NUM_3FRAMES*3;
-    }
-    cout<<" Done."<<endl;
-
-    cout<<endl;
-
-    cout<<"STREAM GENERATION COMPLETED."<<endl;
     return 0;
 }
 
@@ -183,7 +81,8 @@ void Populate(mlv_lens_hdr_t* block){
     strcpy(reinterpret_cast<char *>(&(block->lensSerial)), "TMR_AXFF60213F2");
 }
 
-void Zeros(uint8_t* loc, uint32_t size){
-    for(uint32_t i = 0; i<size; i++)
-        loc[i] = 0;
+char* Zeros(int size){
+    char *ret = new char[size];
+    for(int i=0; i<size; i++)
+        ret[i] = 0;
 }
