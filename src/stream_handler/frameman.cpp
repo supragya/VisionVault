@@ -100,13 +100,12 @@ void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const 
     std::ofstream fStream(dumploc);
 
     if (!fStream.is_open()) {
+        exit_reason = 0;
         *syncbool = false;
     } else {
         std::cout << "FrameDiskHandler success opening " << dumploc << std::endl;
     }
 
-    if (*syncbool)
-        exit_reason = 1;
     int i;
     while (*syncbool) {
         for (i = 0; i < 2; i++) {
@@ -121,6 +120,7 @@ void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const 
         }
     }
     if(!*syncbool){
+        exit_reason = 1;
         for (i = 0; i < 2; i++) {
             if (buf->filled[i]){
                 std::cout<< "FrameDiskHandler dumping "<< i << "(after syncbool = false)" <<std::endl;
@@ -141,7 +141,7 @@ void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const 
             ex = ex + "Could not access outfile " + dumploc;
             break;
         case 1:
-            ex = ex + "Syncbool set to false";
+            ex = ex + "syncbool set to false";
             break;
         default:
             ex = ex + "Unknown";
