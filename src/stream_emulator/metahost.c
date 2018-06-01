@@ -12,7 +12,6 @@ typedef struct fuse_operations operations;
 #include <string.h>
 #include <errno.h>
 #include <stdint.h>
-#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 

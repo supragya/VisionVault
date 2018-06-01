@@ -1,3 +1,14 @@
+deepin-terminal -e ./Framestream_emulator -d -s -f /tmp/rvcfFrameStream/ &
+deepin-terminal -e ./Metastream_emulator -d -s -f /tmp/rvcfMetaStream/ &
+
+echo "=== Waiting 20s for FUSE based streams to load."
+
+sleep 16
+
+echo "Beginning to run stream handler"
+
+sleep 4
+
 //
 // Copyright 2018, Supragya Raj
 // licensed under MIT License (for RawStreamHandler).
