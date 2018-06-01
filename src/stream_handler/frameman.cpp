@@ -1,3 +1,8 @@
+//
+// Copyright 2018, Supragya Raj
+// licensed under MIT License (for RawStreamHandler).
+//
+
 #include "../common/mlv.h"
 #include "frameman.h"
 #include <thread>

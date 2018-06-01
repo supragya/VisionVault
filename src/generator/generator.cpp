@@ -7,20 +7,68 @@
 
 #include <iostream>
 #include <memory.h>
+#include <fstream>
 #include "generator.h"
 
 using namespace std;
 
-int main(){
+int main() {
+    const char *frameFile = "frameData.dat";
+    const char *metaFile = "metaData.dat";
+    const int framesCount = 100;
+
     cout.setf(std::ios_base::unitbuf);
-    cout<<"Axiom Stream Generator"<<endl;
+    cout << "Axiom Stream Generator" << endl;
 
+    ofstream frames(frameFile, ios::binary | ios::trunc | ios::out);
+    ofstream meta(metaFile, ios::binary | ios::trunc | ios::out);
 
+    if (!frames.is_open() || !meta.is_open()) {
+        cout << "Generator could not open either of frames or meta file" << endl;
+        return 1;
+    }
+
+    // Frame file generation
+
+    char *raw12Data = Zeros(18 * 1024 * 1024);
+    mlv_vidf_hdr_t vidf_hdr;
+    Populate(&vidf_hdr);
+
+    for (int i = 0; i < framesCount; i++) {
+        frames.write(reinterpret_cast<char *>(&vidf_hdr), sizeof(vidf_hdr));
+        frames.write(raw12Data, 18 * 1024 * 1024);
+    }
+
+    // Meta file generation
+
+    mlv_file_hdr_t file_hdr;
+    Populate(&file_hdr);
+    mlv_rawi_hdr_t rawi_hdr;
+    Populate(&rawi_hdr);
+
+    char *raw_info = new char[sizeof(raw_info_t)];
+    // TODO: populate raw_info_t
+
+    mlv_expo_hdr_t expo_hdr;
+    Populate(&expo_hdr);
+    mlv_lens_hdr_t lens_hdr;
+    Populate(&lens_hdr);
+
+    meta.write(reinterpret_cast<char *>(&file_hdr), sizeof(mlv_file_hdr_t));
+    meta.write(reinterpret_cast<char *>(&rawi_hdr), sizeof(mlv_rawi_hdr_t));
+    meta.write(raw_info, sizeof(raw_info_t));
+    meta.write(reinterpret_cast<char *>(&expo_hdr), sizeof(mlv_expo_hdr_t));
+    meta.write(reinterpret_cast<char *>(&lens_hdr), sizeof(mlv_lens_hdr_t));
+
+    frames.close();
+    meta.close();
+
+    cout << "Generator ends, stream files written."<<endl;
 
     return 0;
 }
 
-void Populate(mlv_file_hdr_t* block){
+void Populate(mlv_file_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->fileMagic)), "MLVI", 4);
     block->blockSize = 52;
     block->fileGuid = 0; // TODO: Add fileGuid
@@ -35,16 +83,16 @@ void Populate(mlv_file_hdr_t* block){
     block->sourceFpsDenom = 1; // Using 30fps video
 }
 
-void Populate(mlv_rawi_hdr_t* block){
+void Populate(mlv_rawi_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->blockType)), "RAWI", 4);
     block->blockSize = 20 + sizeof(raw_info_t);
     block->timestamp = 0;
     block->xRes = 4096;
     block->yRes = 3072;
-    Zeros(reinterpret_cast<uint8_t*>(&(block->raw_info)), sizeof(raw_info_t));
+    // Zeros(reinterpret_cast<uint8_t *>(&(block->raw_info)), sizeof(raw_info_t));
 }
 
-void Populate(mlv_vidf_hdr_t* block){
+void Populate(mlv_vidf_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->blockType)), "VIDF", 4);
     block->blockSize = 32; // Check if it is correct (header size or header + frame size)
     block->timestamp = 0;
@@ -55,7 +103,7 @@ void Populate(mlv_vidf_hdr_t* block){
     block->panPosY = 3072;
 }
 
-void Populate(mlv_expo_hdr_t* block){
+void Populate(mlv_expo_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->blockType)), "EXPO", 4);
     block->blockSize = 40;
     block->timestamp = 0;
@@ -66,7 +114,7 @@ void Populate(mlv_expo_hdr_t* block){
     block->shutterValue = 250;
 }
 
-void Populate(mlv_lens_hdr_t* block){
+void Populate(mlv_lens_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->blockType)), "LENS", 4);
     block->blockSize = 96;
     block->timestamp = 0;
@@ -81,8 +129,9 @@ void Populate(mlv_lens_hdr_t* block){
     strcpy(reinterpret_cast<char *>(&(block->lensSerial)), "TMR_AXFF60213F2");
 }
 
-char* Zeros(int size){
+char *Zeros(int size) {
     char *ret = new char[size];
-    for(int i=0; i<size; i++)
+    for (int i = 0; i < size; i++)
         ret[i] = 0;
+    return ret;
 }
