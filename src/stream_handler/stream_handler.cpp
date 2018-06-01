@@ -8,7 +8,7 @@
 #include "frameman.h"
 #include "metaman.h"
 
-#define min(a, b) => a>b ? b : a
+#define min(a, b) => (a>b ? b : a)
 
 
 using namespace std;
@@ -68,9 +68,9 @@ int main() {
     const char finalMlv[] = "axiomCache.mlv";
 
     thread frameThread(RawStreamHandler::FrameManEntry, frameStreamLoc, frameCache);
-    //thread metaThread(RawStreamHandler::MetaManEntry, metaStreamLoc, metaCache);
+    thread metaThread(RawStreamHandler::MetaManEntry, metaStreamLoc, metaCache);
     frameThread.join();
-    //metaThread.join();
+    metaThread.join();
 
     cout << "Done receiving from streams, begin merge to single cache" << endl;
 
