@@ -33,21 +33,16 @@ sudo rm -r /tmp/rvcfFrameStream/
 sudo rm -r /tmp/rvcfMetaStream/
 mkdir /tmp/rvcfFrameStream/
 mkdir /tmp/rvcfMetaStream/
-sudo deepin-terminal -e ./Framestream_emulator -d -s -f /tmp/rvcfFrameStream/ &
-sudo deepin-terminal -e ./Metastream_emulator -d -s -f /tmp/rvcfMetaStream/ &
+deepin-terminal -e ./Framestream_emulator -d -s -f /tmp/rvcfFrameStream/ &
+deepin-terminal -e ./Metastream_emulator -d -s -f /tmp/rvcfMetaStream/ &
 
+echo "=== Waiting 20s for FUSE based streams to load."
 
+sleep 16
 
-echo "6 ->"
+echo "Beginning to run stream handler"
 
-sleep 5
-echo "."
-sleep 5
-echo "."
-sleep 5
-echo "."
-sleep 5
-echo "....."
+sleep 4
 
 echo "=== Running Stream Handler"
 ./StreamHandler

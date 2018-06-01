@@ -61,8 +61,8 @@ int main() {
     cout << ">>> AXIOM RVCF Emulation - disk emulation\n" << endl;
     cout << "Spawning threads - frame and meta" << endl;
 
-    const char frameStreamLoc[] = "/tmp/rvcfEmulation/frameStream.dat";
-    const char metaStreamLoc[] = "/tmp/rvcfEmulation/metaStream.dat";
+    const char frameStreamLoc[] = "/tmp/rvcfFrameStream/frameStream";
+    const char metaStreamLoc[] = "/tmp/rvcfMetaStream/metaStream";
     const char frameCache[] = "frameCache.dat";
     const char metaCache[] = "metaCache.dat";
     const char finalMlv[] = "axiomCache.mlv";

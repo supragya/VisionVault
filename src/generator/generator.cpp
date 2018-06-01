@@ -34,10 +34,13 @@ int main() {
     mlv_vidf_hdr_t vidf_hdr;
     Populate(&vidf_hdr);
 
+    cout<<"Generating Frames\n";
     for (int i = 0; i < framesCount; i++) {
         frames.write(reinterpret_cast<char *>(&vidf_hdr), sizeof(vidf_hdr));
         frames.write(raw12Data, 18 * 1024 * 1024);
+        cout<<"\rOf "<<framesCount<<" written "<<i+1;
     }
+    cout<<endl;
 
     // Meta file generation
 
@@ -54,11 +57,13 @@ int main() {
     mlv_lens_hdr_t lens_hdr;
     Populate(&lens_hdr);
 
+    cout<<"Generating Meta ";
     meta.write(reinterpret_cast<char *>(&file_hdr), sizeof(mlv_file_hdr_t));
     meta.write(reinterpret_cast<char *>(&rawi_hdr), sizeof(mlv_rawi_hdr_t));
     meta.write(raw_info, sizeof(raw_info_t));
     meta.write(reinterpret_cast<char *>(&expo_hdr), sizeof(mlv_expo_hdr_t));
     meta.write(reinterpret_cast<char *>(&lens_hdr), sizeof(mlv_lens_hdr_t));
+    cout<<"done"<<endl;
 
     frames.close();
     meta.close();

@@ -6,10 +6,13 @@
 
 #define FUSE_USE_VERSION 26
 
+typedef struct fuse_operations operations;
+
 #include <fuse.h>
 #include <string.h>
 #include <errno.h>
 #include <stdint.h>
+#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -19,7 +22,7 @@ static const char *filepath = "/metaStream";
 static const char *filename = "metaStream";
 
 // Input file location
-const char INPUT_FILE[] = "MetaStream.dat";
+const char INPUT_FILE[] = "metaStream.dat";
 uint8_t *metaStreamMem;
 uint32_t metaStreamSize;
 
@@ -37,8 +40,7 @@ static int read_callback(const char *path, char *buf, size_t size, off_t offset,
 
 void preprocess();
 
-// LibFUSE function references to be utilized
-static struct fuse_operations fuse_example_operations = {
+operations fuse_example_operations = {
         .getattr = getattr_callback,
         .open = open_callback,
         .read = read_callback,

@@ -18,7 +18,7 @@ static const char *filepath = "/frameStream";
 static const char *filename = "frameStream";
 
 // Input file location
-const char INPUT_FILE[] = "FrameStream.dat";
+const char INPUT_FILE[] = "frameStream.dat";
 uint8_t *frameStreamMem;
 uint32_t frameStreamSize;
 
