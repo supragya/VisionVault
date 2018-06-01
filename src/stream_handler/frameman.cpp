@@ -8,7 +8,7 @@
 
 using namespace RawStreamHandler;
 
-void RawStreamHandler::FrameManEntry() {
+void RawStreamHandler::FrameManEntry(const char* frameStreamLoc, const char* frameCache) {
     // Create new struct
     FrameBuffer fb;
     fb.bufsize = 128 * 1024 * 1024; // 128MB
@@ -18,8 +18,8 @@ void RawStreamHandler::FrameManEntry() {
     fb.offset[0] = fb.offset[1] = 0;
 
     bool syncbool = true;
-    std::thread StreamHandler(FrameStreamHandler, &syncbool, &fb, "/tmp/.../");
-    std::thread DiskHandler(FrameDiskHandler, &syncbool, &fb, "frameDump.dat");
+    std::thread StreamHandler(FrameStreamHandler, &syncbool, &fb, frameStreamLoc);
+    std::thread DiskHandler(FrameDiskHandler, &syncbool, &fb, frameCache);
 
     StreamHandler.join();
     DiskHandler.join();
@@ -90,8 +90,64 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
     }
     std::cout << ex << std::endl;
     *syncbool = false;
+    fStream.close();
 }
 
 void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const char *dumploc) {
-    return;
+    int exit_reason = 0;
+    // Reasons: noFileStream(0), syncbool(1), endofstream(2)
+
+    std::ofstream fStream(dumploc);
+
+    if (!fStream.is_open()) {
+        *syncbool = false;
+    } else {
+        std::cout << "FrameDiskHandler success opening " << dumploc << std::endl;
+    }
+
+    if (*syncbool)
+        exit_reason = 1;
+    int i;
+    while (*syncbool) {
+        for (i = 0; i < 2; i++) {
+            if (buf->filled[i]){
+                std::cout<< "FrameDiskHandler dumping "<< i <<std::endl;
+                buf->mutex[i].lock();
+                fStream.write((buf->buf[i]), buf->offset[i]);
+                buf->offset[i] = 0;
+                buf->filled[i] = 0;
+                buf->mutex[i].unlock();
+            }
+        }
+    }
+    if(!*syncbool){
+        for (i = 0; i < 2; i++) {
+            if (buf->filled[i]){
+                std::cout<< "FrameDiskHandler dumping "<< i << "(after syncbool = false)" <<std::endl;
+                buf->mutex[i].lock();
+                fStream.write((buf->buf[i]), buf->offset[i]);
+                buf->offset[i] = 0;
+                buf->filled[i] = 0;
+                buf->mutex[i].unlock();
+            }
+        }
+    }
+
+
+    // Report
+    std::string ex = "FrameDiskHandler exits: ";
+    switch (exit_reason) {
+        case 0:
+            ex = ex + "Could not access outfile " + dumploc;
+            break;
+        case 1:
+            ex = ex + "Syncbool set to false";
+            break;
+        default:
+            ex = ex + "Unknown";
+            break;
+    }
+    std::cout << ex << std::endl;
+    *syncbool = false;
+    fStream.close();
 }

@@ -10,23 +10,21 @@
 using namespace std;
 
 int main() {
-    cout << "--------------------------------------------------------------------------" << endl;
     cout << "AXIOM RVCF Emulation - disk benchmarking" << endl;
+    cout << "Spawning threads - frame and meta" << endl;
 
-    cout << "Spawning threads" << endl;
+    const char frameStreamLoc[] = "/tmp/rvcfEmulation/frameStream.dat";
+    const char frameCache[] = "frameCache.dat";
+    const char metaCache[] = "metaCache.dat";
+    const char finalMlv[] = "axiomCache.mlv";
 
-    thread frameThread(RawStreamHandler::FrameManEntry);
+    thread frameThread(RawStreamHandler::FrameManEntry, frameStreamLoc, frameCache);
 
     frameThread.join();
-//    thread frameThread(RawStreamHandler::FrameManThreadEntry, &buffer);
-//    thread metaThread(RawStreamHandler::MetaManThreadEntry, &buffer);
-//
-//    frameThread.join();
-//    metaThread.join();
 
 
     cout << "Emulation ends here" << endl;
-    cout << "--------------------------------------------------------------------------" << endl;
+
 
     return 0;
 }

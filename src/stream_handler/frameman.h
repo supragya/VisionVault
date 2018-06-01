@@ -12,7 +12,7 @@ namespace RawStreamHandler {
         std::mutex mutex[2];
     };
 
-    void FrameManEntry();
+    void FrameManEntry(const char* frameStreamLoc, const char* frameCache);
 
     void FrameStreamHandler(bool *syncbool, FrameBuffer *buf, const char *streamloc);
 
