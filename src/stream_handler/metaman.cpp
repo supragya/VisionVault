@@ -27,6 +27,7 @@ void RawStreamHandler::MetaManEntry(const char *metaStreamLoc, const char *metaC
     std::map<std::string, uint8_t>::iterator iter;
     while(!metaStream.eof()){
         metaStream.read(reinterpret_cast<char *>(blockType), 4);
+        std::cout<<"Meta Block: "<< reinterpret_cast<char *>(blockType)<<" encountered"<<std::endl;
         iter = sizeChart.find(std::string(reinterpret_cast<char *>(blockType)));
         if(iter == sizeChart.end()){
             std::cout<<"MetaMan: Could not find size of meta block in sizeChart"<<std::endl;

@@ -60,6 +60,7 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
         fStream.read(reinterpret_cast<char *>(&chunk), sizeof(chunk));
         fStream.read(reinterpret_cast<char *>(vidbuf), 18 * 1024 * 1024);
         entrypossible = false;
+        // TODO: Rectify this code to alternate between buffers
         do {
             for (i = 0; i < 2; i++) {
                 if (buf->filled[i])
@@ -81,6 +82,7 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
         memcpy(buf->buf[i] + buf->offset[i], reinterpret_cast<void *>(vidbuf), 18 * 1024 * 1024);
         buf->offset[i] += 18 * 1024 * 1024;
         buf->mutex[i].unlock();
+        std::cout<<"Frame "<<numFrames<<" in buf "<<i<<" sizes ["<<buf->offset[0]<<","<<buf->offset[1]<<"] "<<" filled status: ["<<buf->filled[0]<<","<<buf->filled[1]<<"] "<<std::endl;
         numFrames++;
     }
 
@@ -123,7 +125,7 @@ void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const 
     while (*syncbool) {
         for (i = 0; i < 2; i++) {
             if (buf->filled[i]) {
-                std::cout << "FrameDiskHandler dumping " << i << std::endl;
+                std::cout << "FrameDiskHandler dumping buffer" << i << std::endl;
                 buf->mutex[i].lock();
                 fStream.write((buf->buf[i]), buf->offset[i]);
                 buf->offset[i] = 0;
@@ -135,14 +137,12 @@ void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const 
     if (!*syncbool) {
         exit_reason = 1;
         for (i = 0; i < 2; i++) {
-            if (buf->filled[i]) {
-                std::cout << "FrameDiskHandler dumping " << i << "(after syncbool = false)" << std::endl;
-                buf->mutex[i].lock();
-                fStream.write((buf->buf[i]), buf->offset[i]);
-                buf->offset[i] = 0;
-                buf->filled[i] = 0;
-                buf->mutex[i].unlock();
-            }
+            std::cout << "FrameDiskHandler dumping " << i << "(after syncbool = false)" << std::endl;
+            buf->mutex[i].lock();
+            fStream.write((buf->buf[i]), buf->offset[i]);
+            buf->offset[i] = 0;
+            buf->filled[i] = 0;
+            buf->mutex[i].unlock();
         }
     }
 
