@@ -8,12 +8,12 @@
 #include "frameman.h"
 #include "metaman.h"
 
-#define min(a, b) => (a>b ? b : a)
+#define min(a, b) (a>b ? b : a)
 
 
 using namespace std;
 
-void joinCache(const char *finalMlv, const char cache[], int size) {
+void joinCache(const char *finalMlv, const char *cache[], int size) {
     ifstream tempInfile;
     ofstream out(finalMlv, ios::binary | ios::out);
 
@@ -74,7 +74,9 @@ int main() {
 
     cout << "Done receiving from streams, begin merge to single cache" << endl;
 
-    joinCache(finalMlv, {metaCache, frameCache}, 2);
+    const char *caches[2] = {metaCache, frameCache};
+
+    joinCache(finalMlv, caches, 2);
 
     cout << "Cache joining done, mlv is now ready at " << finalMlv << endl;
 

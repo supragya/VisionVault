@@ -8,7 +8,7 @@
 
 using namespace RawStreamHandler;
 
-void RawStreamHandler::FrameManEntry(const char* frameStreamLoc, const char* frameCache) {
+void RawStreamHandler::FrameManEntry(const char *frameStreamLoc, const char *frameCache) {
     // Create new struct
     FrameBuffer fb;
     fb.bufsize = 128 * 1024 * 1024; // 128MB
@@ -23,7 +23,7 @@ void RawStreamHandler::FrameManEntry(const char* frameStreamLoc, const char* fra
 
     StreamHandler.join();
     DiskHandler.join();
-    std::cout<<"FrameStreamHandler done"<<std::endl;
+    std::cout << "FrameStreamHandler done" << std::endl;
 }
 
 void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, const char *streamloc) {
@@ -42,20 +42,24 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
         exit_reason = 1;
 
     mlv_vidf_hdr_t chunk = {0};
+    char *vidbuf = new char[18 * 1024 * 1024]; // 18MB
     bool entrypossible;
     int i;
+    int numFrames = 0;
+
     while (*syncbool) {
         if (fStream.eof()) {
             exit_reason = 2;
             break;
         }
         fStream.read(reinterpret_cast<char *>(&chunk), sizeof(chunk));
+        fStream.read(reinterpret_cast<char *>(vidbuf), 18 * 1024 * 1024);
         entrypossible = false;
         do {
             for (i = 0; i < 2; i++) {
                 if (buf->filled[i])
                     continue;
-                else if (buf->offset[i] + sizeof(chunk) > buf->bufsize) {
+                else if (buf->offset[i] + sizeof(chunk) + 18 * 1024 * 1024 > buf->bufsize) {
                     buf->filled[i] = true;
                     continue;
                 } else {
@@ -69,11 +73,14 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
         buf->mutex[i].lock();
         memcpy(buf->buf[i] + buf->offset[i], &chunk, sizeof(chunk));
         buf->offset[i] += sizeof(chunk);
+        memcpy(buf->buf[i] + buf->offset[i], reinterpret_cast<void *>(vidbuf), 18 * 1024 * 1024);
+        buf->offset[i] += 18 * 1024 * 1024;
         buf->mutex[i].unlock();
+        numFrames++;
     }
 
-
     // Report
+    std::cout<<"FrameStreamHandler handled "<<numFrames<<" RAW12 vidf frames."<<std::endl;
     std::string ex = "FrameStreamHandler exits: ";
     switch (exit_reason) {
         case 0:
@@ -110,8 +117,8 @@ void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const 
     int i;
     while (*syncbool) {
         for (i = 0; i < 2; i++) {
-            if (buf->filled[i]){
-                std::cout<< "FrameDiskHandler dumping "<< i <<std::endl;
+            if (buf->filled[i]) {
+                std::cout << "FrameDiskHandler dumping " << i << std::endl;
                 buf->mutex[i].lock();
                 fStream.write((buf->buf[i]), buf->offset[i]);
                 buf->offset[i] = 0;
@@ -120,11 +127,11 @@ void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const 
             }
         }
     }
-    if(!*syncbool){
+    if (!*syncbool) {
         exit_reason = 1;
         for (i = 0; i < 2; i++) {
-            if (buf->filled[i]){
-                std::cout<< "FrameDiskHandler dumping "<< i << "(after syncbool = false)" <<std::endl;
+            if (buf->filled[i]) {
+                std::cout << "FrameDiskHandler dumping " << i << "(after syncbool = false)" << std::endl;
                 buf->mutex[i].lock();
                 fStream.write((buf->buf[i]), buf->offset[i]);
                 buf->offset[i] = 0;
