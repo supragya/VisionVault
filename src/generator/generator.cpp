@@ -9,6 +9,7 @@
 #include <memory.h>
 #include <fstream>
 #include "generator.h"
+#include "../common/mlv.h"
 
 using namespace std;
 
@@ -32,48 +33,45 @@ int main() {
 
     char *raw12Data = Zeros(18 * 1024 * 1024);
     mlv_vidf_hdr_t vidf_hdr;
-    Populate(&vidf_hdr);
+    Populatevidf(&vidf_hdr);
 
-    cout<<"Generating Frames\n";
+    cout << "Generating Frames\n";
     for (int i = 0; i < framesCount; i++) {
         frames.write(reinterpret_cast<char *>(&vidf_hdr), sizeof(vidf_hdr));
         frames.write(raw12Data, 18 * 1024 * 1024);
-        cout<<"\rOf "<<framesCount<<" written "<<i+1;
+        cout << "\rOf " << framesCount << " written " << i + 1;
     }
-    cout<<endl;
+    cout << endl;
 
     // Meta file generation
 
     mlv_file_hdr_t file_hdr;
-    Populate(&file_hdr);
+    Populatefile(&file_hdr);
     mlv_rawi_hdr_t rawi_hdr;
-    Populate(&rawi_hdr);
-
-    char *raw_info = new char[sizeof(raw_info_t)];
-    // TODO: populate raw_info_t
+    Populaterawi(&rawi_hdr);
 
     mlv_expo_hdr_t expo_hdr;
-    Populate(&expo_hdr);
+    Populateexpo(&expo_hdr);
     mlv_lens_hdr_t lens_hdr;
-    Populate(&lens_hdr);
+    Populatelens(&lens_hdr);
 
-    cout<<"Generating Meta ";
+    cout << "Generating Meta ";
     meta.write(reinterpret_cast<char *>(&file_hdr), sizeof(mlv_file_hdr_t));
     meta.write(reinterpret_cast<char *>(&rawi_hdr), sizeof(mlv_rawi_hdr_t));
-    meta.write(raw_info, sizeof(raw_info_t));
+    //meta.write(reinterpret_cast<char *>(&rawi_hdr.raw_info), sizeof(raw_info_t));
     meta.write(reinterpret_cast<char *>(&expo_hdr), sizeof(mlv_expo_hdr_t));
     meta.write(reinterpret_cast<char *>(&lens_hdr), sizeof(mlv_lens_hdr_t));
-    cout<<"done"<<endl;
+    cout << "done" << endl;
 
     frames.close();
     meta.close();
 
-    cout << "Generator ends, stream files written."<<endl;
+    cout << "Generator ends, stream files written." << endl;
 
     return 0;
 }
 
-void Populate(mlv_file_hdr_t *block) {
+void Populatefile(mlv_file_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->fileMagic)), "MLVI", 4);
     block->blockSize = 52;
     block->fileGuid = 0; // TODO: Add fileGuid
@@ -88,16 +86,16 @@ void Populate(mlv_file_hdr_t *block) {
     block->sourceFpsDenom = 1; // Using 30fps video
 }
 
-void Populate(mlv_rawi_hdr_t *block) {
+void Populaterawi(mlv_rawi_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->blockType)), "RAWI", 4);
     block->blockSize = 20 + sizeof(raw_info_t);
     block->timestamp = 0;
     block->xRes = 4096;
     block->yRes = 3072;
-    // Zeros(reinterpret_cast<uint8_t *>(&(block->raw_info)), sizeof(raw_info_t));
+    Populaterawinfot(&(block->raw_info));
 }
 
-void Populate(mlv_vidf_hdr_t *block) {
+void Populatevidf(mlv_vidf_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->blockType)), "VIDF", 4);
     block->blockSize = 32; // Check if it is correct (header size or header + frame size)
     block->timestamp = 0;
@@ -108,7 +106,7 @@ void Populate(mlv_vidf_hdr_t *block) {
     block->panPosY = 3072;
 }
 
-void Populate(mlv_expo_hdr_t *block) {
+void Populateexpo(mlv_expo_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->blockType)), "EXPO", 4);
     block->blockSize = 40;
     block->timestamp = 0;
@@ -119,7 +117,7 @@ void Populate(mlv_expo_hdr_t *block) {
     block->shutterValue = 250;
 }
 
-void Populate(mlv_lens_hdr_t *block) {
+void Populatelens(mlv_lens_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->blockType)), "LENS", 4);
     block->blockSize = 96;
     block->timestamp = 0;
@@ -139,4 +137,22 @@ char *Zeros(int size) {
     for (int i = 0; i < size; i++)
         ret[i] = 0;
     return ret;
+}
+
+void Populaterawinfot(raw_info_t *block){
+    block->api_version = 0x0000001;
+    block->height = 3072;
+    block->width = 4092;
+    block->bits_per_pixel = 12;
+    block->pitch = block->width*12/8;
+    block->frame_size = block->height*block->pitch;
+    block->black_level = 0;
+    block->white_level = 15000;
+    block->crop.origin[0] = block->crop.origin[1] = 0;
+    block->crop.size[0] = 4096;
+    block->crop.size[1] = 3072;
+    block->exposure_bias[0] = block->exposure_bias[1] = 0;
+    block->cfa_pattern = 0x02010100;
+    block->calibration_illuminant1 = 0;
+    block->dynamic_range = 12;
 }

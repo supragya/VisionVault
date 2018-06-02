@@ -36,5 +36,7 @@ mkdir /tmp/rvcfMetaStream/
 
 echo "=== Running Stream Handler"
 ./StreamHandler
+echo "=== Emulation ends."
 
-echo "=== Emulation ends.\n"
+echo "=== Test MLV file"
+./../mlv_dump/mlv_dump.linux -v axiom.mlv

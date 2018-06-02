@@ -40,7 +40,7 @@ void joinCache(const char *finalMlv, const char *cache[], int size) {
         }
 
         tempInfile.seekg(tempInfile.end);
-        long long filesize = tempInfile.tellg();
+        long filesize = tempInfile.tellg();
         tempInfile.seekg(tempInfile.beg);
         std::cout << cache[i] << " is sized " << filesize << " bytes" << endl;
 
@@ -67,7 +67,7 @@ int main() {
     const char metaStreamLoc[] = "metaData.dat";
     const char frameCache[] = "frameCache.dat";
     const char metaCache[] = "metaCache.dat";
-    const char finalMlv[] = "axiomCache.mlv";
+    const char finalMlv[] = "axiom.mlv";
 
     thread frameThread(RawStreamHandler::FrameManEntry, frameStreamLoc, frameCache);
     thread metaThread(RawStreamHandler::MetaManEntry, metaStreamLoc, metaCache);

@@ -12,13 +12,20 @@
 
 using namespace std;
 
-void Populate(mlv_vidf_hdr_t*);
-void Populate(mlv_rawi_hdr_t*);
-void Populate(mlv_file_hdr_t*);
-void Populate(mlv_lens_hdr_t*);
-void Populate(mlv_expo_hdr_t*);
+void Populatevidf(mlv_vidf_hdr_t *);
 
-char* Zeros(int size);
+void Populaterawi(mlv_rawi_hdr_t *);
+
+void Populatefile(mlv_file_hdr_t *);
+
+void Populatelens(mlv_lens_hdr_t *);
+
+void Populateexpo(mlv_expo_hdr_t *);
+
+void Populaterawinfot(raw_info_t *);
+
+char *Zeros(int size);
+
 #endif
 
 // cout << "\r\tProgress: ";
