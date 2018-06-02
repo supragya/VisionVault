@@ -17,7 +17,7 @@ using namespace RawStreamHandler;
 void RawStreamHandler::FrameManEntry(const char *frameStreamLoc, const char *frameCache) {
     // Create new struct
     FrameBuffer fb;
-    fb.bufsize = 128 * 1024 * 1024; // 128MB
+    fb.bufsize = 512 * 1024 * 1024; // 512MB
     fb.buf[0] = new char[fb.bufsize];
     fb.buf[1] = new char[fb.bufsize];
     fb.filled[0] = fb.filled[1] = false;
