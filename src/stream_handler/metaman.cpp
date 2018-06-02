@@ -28,10 +28,14 @@ void RawStreamHandler::MetaManEntry(const char *metaStreamLoc, const char *metaC
     while(!metaStream.eof()){
         metaStream.read(reinterpret_cast<char *>(blockType), 4);
         std::cout<<"Meta Block: "<< reinterpret_cast<char *>(blockType)<<" encountered"<<std::endl;
+        if (std::string(reinterpret_cast<char *>(blockType)).compare("")==0){
+            std::cout<<"MetaMan: Found unnamed blockType. Assuming eof."<<std::endl;
+            break;
+        }
         iter = sizeChart.find(std::string(reinterpret_cast<char *>(blockType)));
         if(iter == sizeChart.end()){
             std::cout<<"MetaMan: Could not find size of meta block in sizeChart"<<std::endl;
-            return;
+            break;
         }
         memcpy(buf+offset, blockType, 4);
         offset += 4;
@@ -56,7 +60,8 @@ void RawStreamHandler::MetaManEntry(const char *metaStreamLoc, const char *metaC
     }
     out.close();
     metaStream.close();
-    std::cout<<"MetaMan: Encountered following blocks: \n"<<blocksEncountered<<std::endl;
+    //std::cout<<"MetaMan: Encountered following blocks: \n"<<blocksEncountered<<std::endl;
+    delete buf;
     std::cout<<"MetaMan: MetaStream ended"<<std::endl;
 }
 

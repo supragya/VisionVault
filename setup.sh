@@ -2,7 +2,7 @@
 
 echo "--------------------------------------------------------"
 echo "AXIOM Beta Raw Video Container Format Recorder emulation"
-echo "in memory benchmarking"
+echo "on disk test / benchmarking"
 echo "--------------------------------------------------------"
 echo "- requires root access"
 

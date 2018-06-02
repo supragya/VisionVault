@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <memory.h>
+#include <iomanip>
 
 using namespace RawStreamHandler;
 
@@ -28,6 +29,9 @@ void RawStreamHandler::FrameManEntry(const char *frameStreamLoc, const char *fra
 
     StreamHandler.join();
     DiskHandler.join();
+
+    delete fb.buf[0];
+    delete fb.buf[1];
     std::cout << "FrameStreamHandler done" << std::endl;
 }
 
@@ -51,7 +55,7 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
     bool entrypossible;
     int i;
     int numFrames = 0;
-
+    int curbuf = 0;
     while (*syncbool) {
         if (fStream.eof()) {
             exit_reason = 2;
@@ -63,10 +67,10 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
         // TODO: Rectify this code to alternate between buffers
         do {
             for (i = 0; i < 2; i++) {
-                if (buf->filled[i])
+                if (buf->filled[(curbuf + i) % 2])
                     continue;
-                else if (buf->offset[i] + sizeof(chunk) + 18 * 1024 * 1024 > buf->bufsize) {
-                    buf->filled[i] = true;
+                else if (buf->offset[(curbuf + i) % 2] + sizeof(chunk) + 18 * 1024 * 1024 > buf->bufsize) {
+                    buf->filled[(curbuf + i) % 2] = true;
                     continue;
                 } else {
                     entrypossible = true;
@@ -76,18 +80,23 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
         } while (!entrypossible);
         // Entry possible now
 
-        buf->mutex[i].lock();
-        memcpy(buf->buf[i] + buf->offset[i], &chunk, sizeof(chunk));
-        buf->offset[i] += sizeof(chunk);
-        memcpy(buf->buf[i] + buf->offset[i], reinterpret_cast<void *>(vidbuf), 18 * 1024 * 1024);
-        buf->offset[i] += 18 * 1024 * 1024;
-        buf->mutex[i].unlock();
-        std::cout<<"Frame "<<numFrames<<" in buf "<<i<<" sizes ["<<buf->offset[0]<<","<<buf->offset[1]<<"] "<<" filled status: ["<<buf->filled[0]<<","<<buf->filled[1]<<"] "<<std::endl;
+        curbuf = (curbuf + i) % 2;
+        buf->mutex[curbuf].lock();
+        memcpy(buf->buf[curbuf] + buf->offset[curbuf], &chunk, sizeof(chunk));
+        buf->offset[curbuf] += sizeof(chunk);
+        memcpy(buf->buf[curbuf] + buf->offset[curbuf], reinterpret_cast<void *>(vidbuf), 18 * 1024 * 1024);
+        buf->offset[curbuf] += 18 * 1024 * 1024;
+        buf->mutex[curbuf].unlock();
+        std::cout << std::setprecision(2) << "Frame " << numFrames << " in buf " << curbuf << " sizes ["
+                  << (float) buf->offset[0] * 100 / buf->bufsize << "%,"
+                  << (float) buf->offset[1] * 100 / buf->bufsize
+                  << "%] " << " filled status: [" << buf->filled[0] << "," << buf->filled[1] << "] "
+                  << std::endl;
         numFrames++;
     }
 
     // Report
-    std::cout<<"FrameStreamHandler handled "<<numFrames<<" RAW12 vidf frames."<<std::endl;
+    std::cout << "FrameStreamHandler handled " << numFrames << " RAW12 vidf frames." << std::endl;
     std::string ex = "FrameStreamHandler exits: ";
     switch (exit_reason) {
         case 0:
@@ -125,27 +134,39 @@ void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const 
     while (*syncbool) {
         for (i = 0; i < 2; i++) {
             if (buf->filled[i]) {
-                std::cout << "FrameDiskHandler dumping buffer" << i << std::endl;
+
                 buf->mutex[i].lock();
+                auto beg = fStream.tellp();
                 fStream.write((buf->buf[i]), buf->offset[i]);
+                auto end = fStream.tellp();
                 buf->offset[i] = 0;
                 buf->filled[i] = 0;
                 buf->mutex[i].unlock();
+                std::cout << "FrameDiskHandler dumping buffer " << i << " [" << beg << " -> " << end << "] "
+                          << std::endl;
             }
         }
     }
     if (!*syncbool) {
         exit_reason = 1;
         for (i = 0; i < 2; i++) {
-            std::cout << "FrameDiskHandler dumping " << i << "(after syncbool = false)" << std::endl;
             buf->mutex[i].lock();
+            auto beg = fStream.tellp();
             fStream.write((buf->buf[i]), buf->offset[i]);
+            auto end = fStream.tellp();
             buf->offset[i] = 0;
             buf->filled[i] = 0;
             buf->mutex[i].unlock();
+            std::cout << "FrameDiskHandler dumping (after syncbool = false) buffer " << i << " [" << beg << " -> "
+                      << end << "] " << std::endl;
         }
     }
 
+    std::cout << std::setprecision(2) <<"FrameDiskHandler report: sizes ["
+              << (float) buf->offset[0] * 100 / buf->bufsize << "%,"
+              << (float) buf->offset[1] * 100 / buf->bufsize
+              << "%] " << " filled status: [" << buf->filled[0] << "," << buf->filled[1] << "] "
+              << std::endl;
 
     // Report
     std::string ex = "FrameDiskHandler exits: ";

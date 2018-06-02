@@ -39,8 +39,9 @@ void joinCache(const char *finalMlv, const char *cache[], int size) {
             std::cout << "Join: success opening " << cache[i] << std::endl;
         }
 
-        tempInfile.seekg(ios::end);
+        tempInfile.seekg(tempInfile.end);
         long long filesize = tempInfile.tellg();
+        tempInfile.seekg(tempInfile.beg);
         std::cout << cache[i] << " is sized " << filesize << " bytes" << endl;
 
         while(min(filesize, buffersize) == buffersize){
@@ -53,6 +54,7 @@ void joinCache(const char *finalMlv, const char *cache[], int size) {
         std::cout<< "Join: Written successfully "<<cache[i]<<std::endl;
     }
 
+    delete buf;
     std::cout<<"Joining done!"<<std::endl;
     out.close();
 }
