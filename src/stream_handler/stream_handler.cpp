@@ -48,7 +48,6 @@ void joinCache(const char *finalMlv, const char *cache[], int size) {
     int marker = 0;
     bool markerFound = false;
     tempInfile.read(reinterpret_cast<char *>(&marker), sizeof(int));
-    cout << marker << endl;
     if (marker == 233)
         markerFound = true;
     mlv_vidf_hdr_t vidf_hdr;
@@ -59,7 +58,7 @@ void joinCache(const char *finalMlv, const char *cache[], int size) {
         tempInfile.read(buf, 18 * 1024 * 1024);
         out.write(reinterpret_cast<char *>(&vidf_hdr), sizeof(vidf_hdr));
         out.write(buf, 18 * 1024 * 1024);
-        cout << ".";
+        cout << "\rEncountered frame no. "<<framectr;
         framectr++;
         markerFound = false;
         marker = 0;

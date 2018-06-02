@@ -1,0 +1,1062 @@
+--------------------------------------------------------
+AXIOM Beta Raw Video Container Format Recorder emulation
+on disk test / benchmarking
+--------------------------------------------------------
+- requires root access
+=== Beginning building binaries for emulation
+-- The C compiler identification is GNU 8.1.0
+-- The CXX compiler identification is GNU 8.1.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/supragya/Projects/AXIOM_RawStreamHandler/build
+Scanning dependencies of target Generator
+[ 10%] Building CXX object src/generator/CMakeFiles/Generator.dir/generator.cpp.o
+[ 20%] Linking CXX executable Generator
+[ 20%] Built target Generator
+Scanning dependencies of target Framestream_emulator
+[ 30%] Building C object src/stream_emulator/CMakeFiles/Framestream_emulator.dir/videohost.c.o
+[ 40%] Linking C executable Framestream_emulator
+[ 40%] Built target Framestream_emulator
+Scanning dependencies of target Metastream_emulator
+[ 50%] Building C object src/stream_emulator/CMakeFiles/Metastream_emulator.dir/metahost.c.o
+[ 60%] Linking C executable Metastream_emulator
+[ 60%] Built target Metastream_emulator
+Scanning dependencies of target StreamHandler
+[ 70%] Building CXX object src/stream_handler/CMakeFiles/StreamHandler.dir/frameman.cpp.o
+[ 80%] Building CXX object src/stream_handler/CMakeFiles/StreamHandler.dir/metaman.cpp.o
+[ 90%] Building CXX object src/stream_handler/CMakeFiles/StreamHandler.dir/stream_handler.cpp.o
+[100%] Linking CXX executable StreamHandler
+[100%] Built target StreamHandler
+=== Beginning to write streams to disk
+Axiom Stream Generator
+Generating Frames
+Of 100 written 1Of 100 written 2Of 100 written 3Of 100 written 4Of 100 written 5Of 100 written 6Of 100 written 7Of 100 written 8Of 100 written 9Of 100 written 10Of 100 written 11Of 100 written 12Of 100 written 13Of 100 written 14Of 100 written 15Of 100 written 16Of 100 written 17Of 100 written 18Of 100 written 19Of 100 written 20Of 100 written 21Of 100 written 22Of 100 written 23Of 100 written 24Of 100 written 25Of 100 written 26Of 100 written 27Of 100 written 28Of 100 written 29Of 100 written 30Of 100 written 31Of 100 written 32Of 100 written 33Of 100 written 34Of 100 written 35Of 100 written 36Of 100 written 37Of 100 written 38Of 100 written 39Of 100 written 40Of 100 written 41Of 100 written 42Of 100 written 43Of 100 written 44Of 100 written 45Of 100 written 46Of 100 written 47Of 100 written 48Of 100 written 49Of 100 written 50Of 100 written 51Of 100 written 52Of 100 written 53Of 100 written 54Of 100 written 55Of 100 written 56Of 100 written 57Of 100 written 58Of 100 written 59Of 100 written 60Of 100 written 61Of 100 written 62Of 100 written 63Of 100 written 64Of 100 written 65Of 100 written 66Of 100 written 67Of 100 written 68Of 100 written 69Of 100 written 70Of 100 written 71Of 100 written 72Of 100 written 73Of 100 written 74Of 100 written 75Of 100 written 76Of 100 written 77Of 100 written 78Of 100 written 79Of 100 written 80Of 100 written 81Of 100 written 82Of 100 written 83Of 100 written 84Of 100 written 85Of 100 written 86Of 100 written 87Of 100 written 88Of 100 written 89Of 100 written 90Of 100 written 91Of 100 written 92Of 100 written 93Of 100 written 94Of 100 written 95Of 100 written 96Of 100 written 97Of 100 written 98Of 100 written 99Of 100 written 100
+Generating Meta done
+Generator ends, stream files written.
+=== Writing to disk done
+total 1.8G
+-rw-r--r-- 1 supragya supragya 1.8G Jun  2 15:45 frameData.dat
+-rwxr-xr-x 1 supragya supragya  14K Jun  2 15:45 Framestream_emulator
+-rwxr-xr-x 1 supragya supragya  19K Jun  2 15:45 Generator
+-rw-r--r-- 1 supragya supragya  380 Jun  2 15:45 metaData.dat
+-rwxr-xr-x 1 supragya supragya  14K Jun  2 15:45 Metastream_emulator
+-rwxr-xr-x 1 supragya supragya 130K Jun  2 15:45 StreamHandler
+=== Setting up streams. Give some time to load fully
+=== Running Stream Handler
+>>> AXIOM RVCF Emulation - disk emulation
+
+Spawning threads - frame and meta
+MetaMan: Success in accessing stream metaData.dat
+FrameStreamHandler success opening Meta Block: frameData.datMLVI encountered
+
+Meta Block: RAWI encountered
+Meta Block: EXPO encountered
+Meta Block: LENS encounteredFrameDiskHandler success opening 
+frameCache.dat
+MetaMan: metaStream read into memory buffer
+MetaMan: Cache file writing donemetaCache.dat
+MetaMan: MetaStream ended
+Frame 0 in buf 0 sizes [3.5%,0%]  filled status: [0,0] 
+Frame 1 in buf 0 sizes [7%,0%]  filled status: [0,0] 
+Frame 2 in buf 0 sizes [11%,0%]  filled status: [0,0] 
+Frame 3 in buf 0 sizes [14%,0%]  filled status: [0,0] 
+Frame 4 in buf 0 sizes [18%,0%]  filled status: [0,0] 
+Frame 5 in buf 0 sizes [21%,0%]  filled status: [0,0] 
+Frame 6 in buf 0 sizes [25%,0%]  filled status: [0,0] 
+Frame 7 in buf 0 sizes [28%,0%]  filled status: [0,0] 
+Frame 8 in buf 0 sizes [32%,0%]  filled status: [0,0] 
+Frame 9 in buf 0 sizes [35%,0%]  filled status: [0,0] 
+Frame 10 in buf 0 sizes [39%,0%]  filled status: [0,0] 
+Frame 11 in buf 0 sizes [42%,0%]  filled status: [0,0] 
+Frame 12 in buf 0 sizes [46%,0%]  filled status: [0,0] 
+Frame 13 in buf 0 sizes [49%,0%]  filled status: [0,0] 
+Frame 14 in buf 0 sizes [53%,0%]  filled status: [0,0] 
+Frame 15 in buf 0 sizes [56%,0%]  filled status: [0,0] 
+Frame 16 in buf 0 sizes [60%,0%]  filled status: [0,0] 
+Frame 17 in buf 0 sizes [63%,0%]  filled status: [0,0] 
+Frame 18 in buf 0 sizes [67%,0%]  filled status: [0,0] 
+Frame 19 in buf 0 sizes [70%,0%]  filled status: [0,0] 
+Frame 20 in buf 0 sizes [74%,0%]  filled status: [0,0] 
+Frame 21 in buf 0 sizes [77%,0%]  filled status: [0,0] 
+Frame 22 in buf 0 sizes [81%,0%]  filled status: [0,0] 
+Frame 23 in buf 0 sizes [84%,0%]  filled status: [0,0] 
+Frame 24 in buf 0 sizes [88%,0%]  filled status: [0,0] 
+Frame 25 in buf 0 sizes [91%,0%]  filled status: [0,0] 
+Frame 26 in buf 0 sizes [95%,0%]  filled status: [0,0] 
+Frame 27 in buf 0 sizes [98%,0%]  filled status: [0,0] 
+Frame 28 in buf 1 sizes [98%,3.5%]  filled status: [1,0] 
+Frame 29 in buf 1 sizes [98%,7%]  filled status: [1,0] 
+Frame 30 in buf 1 sizes [98%,11%]  filled status: [1,0] 
+Frame 31 in buf 1 sizes [98%,14%]  filled status: [1,0] 
+Frame 32 in buf 1 sizes [98%,18%]  filled status: [1,0] 
+Frame 33 in buf 1 sizes [98%,21%]  filled status: [1,0] 
+Frame 34 in buf 1 sizes [98%,25%]  filled status: [1,0] 
+Frame 35 in buf 1 sizes [98%,28%]  filled status: [1,0] 
+Frame 36 in buf 1 sizes [98%,32%]  filled status: [1,0] 
+Frame 37 in buf 1 sizes [98%,35%]  filled status: [1,0] 
+Frame 38 in buf 1 sizes [98%,39%]  filled status: [1,0] 
+Frame 39 in buf 1 sizes [98%,42%]  filled status: [1,0] 
+Frame 40 in buf 1 sizes [98%,46%]  filled status: [1,0] 
+Frame 41 in buf 1 sizes [98%,49%]  filled status: [1,0] 
+Frame 42 in buf 1 sizes [98%,53%]  filled status: [1,0] 
+Frame 43 in buf 1 sizes [98%,56%]  filled status: [1,0] 
+Frame 44 in buf 1 sizes [98%,60%]  filled status: [1,0] 
+Frame 45 in buf 1 sizes [98%,63%]  filled status: [1,0] 
+Frame 46 in buf 1 sizes [98%,67%]  filled status: [1,0] 
+Frame 47 in buf 1 sizes [98%,70%]  filled status: [1,0] 
+Frame 48 in buf 1 sizes [98%,74%]  filled status: [1,0] 
+Frame 49 in buf 1 sizes [98%,77%]  filled status: [1,0] 
+Frame 50 in buf 1 sizes [98%,81%]  filled status: [1,0] 
+Frame 51 in buf 1 sizes [98%,84%]  filled status: [1,0] 
+Frame 52 in buf 1 sizes [98%,88%]  filled status: [1,0] 
+Frame 53 in buf 1 sizes [98%,91%]  filled status: [1,0] 
+Frame 54 in buf 1 sizes [98%,95%]  filled status: [1,0] 
+Frame 55 in buf 1 sizes [98%,98%]  filled status: [1,0] 
+FrameDiskHandler dumping buffer 0 [0 -> 528483312] 
+Frame 56 in buf 0 sizes [3.5%,98%]  filled status: [0,1] 
+Frame 57 in buf 0 sizes [7%,98%]  filled status: [0,1] 
+Frame 58 in buf 0 sizes [11%,98%]  filled status: [0,1] 
+Frame 59 in buf 0 sizes [14%,98%]  filled status: [0,1] 
+Frame 60 in buf 0 sizes [18%,98%]  filled status: [0,1] 
+Frame 61 in buf 0 sizes [21%,98%]  filled status: [0,1] 
+Frame 62 in buf 0 sizes [25%,98%]  filled status: [0,1] 
+Frame 63 in buf 0 sizes [28%,98%]  filled status: [0,1] 
+Frame 64 in buf 0 sizes [32%,98%]  filled status: [0,1] 
+Frame 65 in buf 0 sizes [35%,98%]  filled status: [0,1] 
+Frame 66 in buf 0 sizes [39%,98%]  filled status: [0,1] 
+Frame 67 in buf 0 sizes [42%,98%]  filled status: [0,1] 
+Frame 68 in buf 0 sizes [46%,98%]  filled status: [0,1] 
+Frame 69 in buf 0 sizes [49%,98%]  filled status: [0,1] 
+Frame 70 in buf 0 sizes [53%,98%]  filled status: [0,1] 
+Frame 71 in buf 0 sizes [56%,98%]  filled status: [0,1] 
+Frame 72 in buf 0 sizes [60%,98%]  filled status: [0,1] 
+Frame 73 in buf 0 sizes [63%,98%]  filled status: [0,1] 
+Frame 74 in buf 0 sizes [67%,98%]  filled status: [0,1] 
+Frame 75 in buf 0 sizes [70%,98%]  filled status: [0,1] 
+Frame 76 in buf 0 sizes [74%,98%]  filled status: [0,1] 
+Frame 77 in buf 0 sizes [77%,98%]  filled status: [0,1] 
+Frame 78 in buf 0 sizes [81%,98%]  filled status: [0,1] 
+Frame 79 in buf 0 sizes [84%,98%]  filled status: [0,1] 
+Frame 80 in buf 0 sizes [88%,98%]  filled status: [0,1] 
+Frame 81 in buf 0 sizes [91%,98%]  filled status: [0,1] 
+Frame 82 in buf 0 sizes [95%,98%]  filled status: [0,1] 
+Frame 83 in buf 0 sizes [98%,98%]  filled status: [0,1] 
+FrameDiskHandler dumping buffer 1 [528483312 -> 1056966624] 
+Frame 84 in buf 1 sizes [98%,3.5%]  filled status: [1,0] 
+Frame 85 in buf 1 sizes [98%,7%]  filled status: [1,0] 
+Frame 86 in buf 1 sizes [98%,11%]  filled status: [1,0] 
+Frame 87 in buf 1 sizes [98%,14%]  filled status: [1,0] 
+Frame 88 in buf 1 sizes [98%,18%]  filled status: [1,0] 
+Frame 89 in buf 1 sizes [98%,21%]  filled status: [1,0] 
+Frame 90 in buf 1 sizes [98%,25%]  filled status: [1,0] 
+Frame 91 in buf 1 sizes [98%,28%]  filled status: [1,0] 
+Frame 92 in buf 1 sizes [98%,32%]  filled status: [1,0] 
+Frame 93 in buf 1 sizes [98%,35%]  filled status: [1,0] 
+Frame 94 in buf 1 sizes [98%,39%]  filled status: [1,0] 
+Frame 95 in buf 1 sizes [98%,42%]  filled status: [1,0] 
+Frame 96 in buf 1 sizes [98%,46%]  filled status: [1,0] 
+Frame 97 in buf 1 sizes [98%,49%]  filled status: [1,0] 
+Frame 98 in buf 1 sizes [98%,53%]  filled status: [1,0] 
+Frame 99 in buf 1 sizes [98%,56%]  filled status: [1,0] 
+FrameStreamHandler handled 100 RAW12 vidf frames.
+FrameStreamHandler exits: Reached eof on file frameData.dat
+FrameDiskHandler dumping buffer 0 [1056966624 -> 1585449936] 
+FrameDiskHandler dumping (after syncbool = false) buffer 0 [1585449936 -> 1585449936] 
+FrameDiskHandler dumping (after syncbool = false) buffer 1 [1585449936 -> 1887440400] 
+FrameDiskHandler report: sizes [0%,0%]  filled status: [0,0] 
+FrameDiskHandler exits: syncbool set to false
+FrameStreamHandler done
+Done receiving from streams, begin merge to single cache
+Join: success opening axiom.mlv
+Join: success opening metaCache.dat
+Out from [0, 368]
+Join: Written successfully metaCache.dat
+Join: success opening frameCache.dat
+Encountered frame no. 0Encountered frame no. 1Encountered frame no. 2Encountered frame no. 3Encountered frame no. 4Encountered frame no. 5Encountered frame no. 6Encountered frame no. 7Encountered frame no. 8Encountered frame no. 9Encountered frame no. 10Encountered frame no. 11Encountered frame no. 12Encountered frame no. 13Encountered frame no. 14Encountered frame no. 15Encountered frame no. 16Encountered frame no. 17Encountered frame no. 18Encountered frame no. 19Encountered frame no. 20Encountered frame no. 21Encountered frame no. 22Encountered frame no. 23Encountered frame no. 24Encountered frame no. 25Encountered frame no. 26Encountered frame no. 27Encountered frame no. 28Encountered frame no. 29Encountered frame no. 30Encountered frame no. 31Encountered frame no. 32Encountered frame no. 33Encountered frame no. 34Encountered frame no. 35Encountered frame no. 36Encountered frame no. 37Encountered frame no. 38Encountered frame no. 39Encountered frame no. 40Encountered frame no. 41Encountered frame no. 42Encountered frame no. 43Encountered frame no. 44Encountered frame no. 45Encountered frame no. 46Encountered frame no. 47Encountered frame no. 48Encountered frame no. 49Encountered frame no. 50Encountered frame no. 51Encountered frame no. 52Encountered frame no. 53Encountered frame no. 54Encountered frame no. 55Encountered frame no. 56Encountered frame no. 57Encountered frame no. 58Encountered frame no. 59Encountered frame no. 60Encountered frame no. 61Encountered frame no. 62Encountered frame no. 63Encountered frame no. 64Encountered frame no. 65Encountered frame no. 66Encountered frame no. 67Encountered frame no. 68Encountered frame no. 69Encountered frame no. 70Encountered frame no. 71Encountered frame no. 72Encountered frame no. 73Encountered frame no. 74Encountered frame no. 75Encountered frame no. 76Encountered frame no. 77Encountered frame no. 78Encountered frame no. 79Encountered frame no. 80Encountered frame no. 81Encountered frame no. 82Encountered frame no. 83Encountered frame no. 84Encountered frame no. 85Encountered frame no. 86Encountered frame no. 87Encountered frame no. 88Encountered frame no. 89Encountered frame no. 90Encountered frame no. 91Encountered frame no. 92Encountered frame no. 93Encountered frame no. 94Encountered frame no. 95Encountered frame no. 96Encountered frame no. 97Encountered frame no. 98Encountered frame no. 99
+Join: written 100 frames
+Join: Written successfully frameCache.dat
+Joining done!
+Cache joining done, mlv is now ready at axiom.mlv
+
+>>>Emulation ends here
+=== Emulation ends.
+=== Test MLV file
+
+ MLV Dumper v1.0
+-----------------
+
+Mode of operation:
+   - Input MLV file: 'axiom.mlv'
+   - Verbose messages
+   - Verify file structure
+   - Dump all block information
+File axiom.mlv opened
+File axiom.m00 not existing.
+Processing...
+File Header (MLVI)
+    Size        : 0x00000034
+    Ver         : 
+    GUID        : 00000000
+    FPS         : 30.000000
+    File        : 0 / 1
+    Frames Video: 0
+    Frames Audio: 0
+Block: RAWI
+  Offset: 0x00000034
+    Size: 180
+    Time: 0.000000 ms
+    Res:  4096x3072
+    raw_info:
+      api_version      0x00000001
+      height           3072
+      width            4092
+      pitch            6138
+      frame_size       0x011FB800
+      bits_per_pixel   12
+      black_level      0
+      white_level      15000
+      active_area.y1   1794095816
+      active_area.x1   32766
+      active_area.y2   -795708264
+      active_area.x2   32532
+      exposure_bias    0, 0
+      cfa_pattern      0x02010100
+      calibration_ill  0
+Block: EXPO
+  Offset: 0x000000e8
+    Size: 40
+    Time: 0.000000 ms
+     ISO Mode:   0
+     ISO:        400
+     ISO Analog: 800
+     ISO DGain:  1/1024 EV
+     Shutter:    250 microseconds (1/4000.00)
+Block: LENS
+  Offset: 0x00000110
+    Size: 96
+    Time: 0.000000 ms
+     Name:        'Tamron Di LD Macro 1:2'
+     Serial:      'TMR_AXFF60213F2'
+     Focal Len:   35 mm
+     Focus Dist:  65535 mm
+     Aperture:    f/3.50
+     IS Mode:     0
+     AF Mode:     1
+     Lens ID:     0x4FFAE214
+     Flags:       0x00000000
+Block: VIDF
+  Offset: 0x00000170
+    Size: 18874400
+    Time: 0.000000 ms
+   Frame: #0000
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x01200190
+    Size: 18874400
+    Time: 0.001000 ms
+   Frame: #0001
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x024001b0
+    Size: 18874400
+    Time: 0.002000 ms
+   Frame: #0002
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x036001d0
+    Size: 18874400
+    Time: 0.003000 ms
+   Frame: #0003
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x048001f0
+    Size: 18874400
+    Time: 0.004000 ms
+   Frame: #0004
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x05a00210
+    Size: 18874400
+    Time: 0.005000 ms
+   Frame: #0005
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x06c00230
+    Size: 18874400
+    Time: 0.006000 ms
+   Frame: #0006
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x07e00250
+    Size: 18874400
+    Time: 0.007000 ms
+   Frame: #0007
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x09000270
+    Size: 18874400
+    Time: 0.008000 ms
+   Frame: #0008
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x0a200290
+    Size: 18874400
+    Time: 0.009000 ms
+   Frame: #0009
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x0b4002b0
+    Size: 18874400
+    Time: 0.010000 ms
+   Frame: #0010
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x0c6002d0
+    Size: 18874400
+    Time: 0.011000 ms
+   Frame: #0011
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x0d8002f0
+    Size: 18874400
+    Time: 0.012000 ms
+   Frame: #0012
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x0ea00310
+    Size: 18874400
+    Time: 0.013000 ms
+   Frame: #0013
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x0fc00330
+    Size: 18874400
+    Time: 0.014000 ms
+   Frame: #0014
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x10e00350
+    Size: 18874400
+    Time: 0.015000 ms
+   Frame: #0015
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x12000370
+    Size: 18874400
+    Time: 0.016000 ms
+   Frame: #0016
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x13200390
+    Size: 18874400
+    Time: 0.017000 ms
+   Frame: #0017
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x144003b0
+    Size: 18874400
+    Time: 0.018000 ms
+   Frame: #0018
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x156003d0
+    Size: 18874400
+    Time: 0.019000 ms
+   Frame: #0019
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x168003f0
+    Size: 18874400
+    Time: 0.020000 ms
+   Frame: #0020
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x17a00410
+    Size: 18874400
+    Time: 0.021000 ms
+   Frame: #0021
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x18c00430
+    Size: 18874400
+    Time: 0.022000 ms
+   Frame: #0022
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x19e00450
+    Size: 18874400
+    Time: 0.023000 ms
+   Frame: #0023
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x1b000470
+    Size: 18874400
+    Time: 0.024000 ms
+   Frame: #0024
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x1c200490
+    Size: 18874400
+    Time: 0.025000 ms
+   Frame: #0025
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x1d4004b0
+    Size: 18874400
+    Time: 0.026000 ms
+   Frame: #0026
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x1e6004d0
+    Size: 18874400
+    Time: 0.027000 ms
+   Frame: #0027
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x1f8004f0
+    Size: 18874400
+    Time: 0.028000 ms
+   Frame: #0028
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x20a00510
+    Size: 18874400
+    Time: 0.029000 ms
+   Frame: #0029
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x21c00530
+    Size: 18874400
+    Time: 0.030000 ms
+   Frame: #0030
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x22e00550
+    Size: 18874400
+    Time: 0.031000 ms
+   Frame: #0031
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x24000570
+    Size: 18874400
+    Time: 0.032000 ms
+   Frame: #0032
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x25200590
+    Size: 18874400
+    Time: 0.033000 ms
+   Frame: #0033
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x264005b0
+    Size: 18874400
+    Time: 0.034000 ms
+   Frame: #0034
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x276005d0
+    Size: 18874400
+    Time: 0.035000 ms
+   Frame: #0035
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x288005f0
+    Size: 18874400
+    Time: 0.036000 ms
+   Frame: #0036
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x29a00610
+    Size: 18874400
+    Time: 0.037000 ms
+   Frame: #0037
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x2ac00630
+    Size: 18874400
+    Time: 0.038000 ms
+   Frame: #0038
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x2be00650
+    Size: 18874400
+    Time: 0.039000 ms
+   Frame: #0039
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x2d000670
+    Size: 18874400
+    Time: 0.040000 ms
+   Frame: #0040
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x2e200690
+    Size: 18874400
+    Time: 0.041000 ms
+   Frame: #0041
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x2f4006b0
+    Size: 18874400
+    Time: 0.042000 ms
+   Frame: #0042
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x306006d0
+    Size: 18874400
+    Time: 0.043000 ms
+   Frame: #0043
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x318006f0
+    Size: 18874400
+    Time: 0.044000 ms
+   Frame: #0044
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x32a00710
+    Size: 18874400
+    Time: 0.045000 ms
+   Frame: #0045
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x33c00730
+    Size: 18874400
+    Time: 0.046000 ms
+   Frame: #0046
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x34e00750
+    Size: 18874400
+    Time: 0.047000 ms
+   Frame: #0047
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x36000770
+    Size: 18874400
+    Time: 0.048000 ms
+   Frame: #0048
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x37200790
+    Size: 18874400
+    Time: 0.049000 ms
+   Frame: #0049
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x384007b0
+    Size: 18874400
+    Time: 0.050000 ms
+   Frame: #0050
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x396007d0
+    Size: 18874400
+    Time: 0.051000 ms
+   Frame: #0051
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x3a8007f0
+    Size: 18874400
+    Time: 0.052000 ms
+   Frame: #0052
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x3ba00810
+    Size: 18874400
+    Time: 0.053000 ms
+   Frame: #0053
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x3cc00830
+    Size: 18874400
+    Time: 0.054000 ms
+   Frame: #0054
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x3de00850
+    Size: 18874400
+    Time: 0.055000 ms
+   Frame: #0055
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x3f000870
+    Size: 18874400
+    Time: 0.056000 ms
+   Frame: #0056
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x40200890
+    Size: 18874400
+    Time: 0.057000 ms
+   Frame: #0057
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x414008b0
+    Size: 18874400
+    Time: 0.058000 ms
+   Frame: #0058
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x426008d0
+    Size: 18874400
+    Time: 0.059000 ms
+   Frame: #0059
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x438008f0
+    Size: 18874400
+    Time: 0.060000 ms
+   Frame: #0060
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x44a00910
+    Size: 18874400
+    Time: 0.061000 ms
+   Frame: #0061
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x45c00930
+    Size: 18874400
+    Time: 0.062000 ms
+   Frame: #0062
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x46e00950
+    Size: 18874400
+    Time: 0.063000 ms
+   Frame: #0063
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x48000970
+    Size: 18874400
+    Time: 0.064000 ms
+   Frame: #0064
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x49200990
+    Size: 18874400
+    Time: 0.065000 ms
+   Frame: #0065
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x4a4009b0
+    Size: 18874400
+    Time: 0.066000 ms
+   Frame: #0066
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x4b6009d0
+    Size: 18874400
+    Time: 0.067000 ms
+   Frame: #0067
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x4c8009f0
+    Size: 18874400
+    Time: 0.068000 ms
+   Frame: #0068
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x4da00a10
+    Size: 18874400
+    Time: 0.069000 ms
+   Frame: #0069
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x4ec00a30
+    Size: 18874400
+    Time: 0.070000 ms
+   Frame: #0070
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x4fe00a50
+    Size: 18874400
+    Time: 0.071000 ms
+   Frame: #0071
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x51000a70
+    Size: 18874400
+    Time: 0.072000 ms
+   Frame: #0072
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x52200a90
+    Size: 18874400
+    Time: 0.073000 ms
+   Frame: #0073
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x53400ab0
+    Size: 18874400
+    Time: 0.074000 ms
+   Frame: #0074
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x54600ad0
+    Size: 18874400
+    Time: 0.075000 ms
+   Frame: #0075
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x55800af0
+    Size: 18874400
+    Time: 0.076000 ms
+   Frame: #0076
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x56a00b10
+    Size: 18874400
+    Time: 0.077000 ms
+   Frame: #0077
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x57c00b30
+    Size: 18874400
+    Time: 0.078000 ms
+   Frame: #0078
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x58e00b50
+    Size: 18874400
+    Time: 0.079000 ms
+   Frame: #0079
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x5a000b70
+    Size: 18874400
+    Time: 0.080000 ms
+   Frame: #0080
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x5b200b90
+    Size: 18874400
+    Time: 0.081000 ms
+   Frame: #0081
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x5c400bb0
+    Size: 18874400
+    Time: 0.082000 ms
+   Frame: #0082
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x5d600bd0
+    Size: 18874400
+    Time: 0.083000 ms
+   Frame: #0083
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x5e800bf0
+    Size: 18874400
+    Time: 0.084000 ms
+   Frame: #0084
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x5fa00c10
+    Size: 18874400
+    Time: 0.085000 ms
+   Frame: #0085
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x60c00c30
+    Size: 18874400
+    Time: 0.086000 ms
+   Frame: #0086
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x61e00c50
+    Size: 18874400
+    Time: 0.087000 ms
+   Frame: #0087
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x63000c70
+    Size: 18874400
+    Time: 0.088000 ms
+   Frame: #0088
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x64200c90
+    Size: 18874400
+    Time: 0.089000 ms
+   Frame: #0089
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x65400cb0
+    Size: 18874400
+    Time: 0.090000 ms
+   Frame: #0090
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x66600cd0
+    Size: 18874400
+    Time: 0.091000 ms
+   Frame: #0091
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x67800cf0
+    Size: 18874400
+    Time: 0.092000 ms
+   Frame: #0092
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x68a00d10
+    Size: 18874400
+    Time: 0.093000 ms
+   Frame: #0093
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x69c00d30
+    Size: 18874400
+    Time: 0.094000 ms
+   Frame: #0094
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x6ae00d50
+    Size: 18874400
+    Time: 0.095000 ms
+   Frame: #0095
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x6c000d70
+    Size: 18874400
+    Time: 0.096000 ms
+   Frame: #0096
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x6d200d90
+    Size: 18874400
+    Time: 0.097000 ms
+   Frame: #0097
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x6e400db0
+    Size: 18874400
+    Time: 0.098000 ms
+   Frame: #0098
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Block: VIDF
+  Offset: 0x6f600dd0
+    Size: 18874400
+    Time: 0.099000 ms
+   Frame: #0099
+    Crop: 0x0
+     Pan: 4096x3072
+   Space: 22008
+Reached end of chunk 1/1 after 104 blocks
+Processed 100 video frames
+Done
+

@@ -38,6 +38,8 @@ int main() {
     int marker = 233;
     cout << "Generating Frames\n";
     for (int i = 0; i < framesCount; i++) {
+        vidf_hdr.frameNumber = i;
+        vidf_hdr.timestamp = i;
         frames.write(reinterpret_cast<char *>(&marker), sizeof(int));
         frames.write(reinterpret_cast<char *>(&vidf_hdr), sizeof(vidf_hdr));
         frames.write(raw12Data, 18 * 1024 * 1024);
