@@ -56,8 +56,16 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
     int i;
     int numFrames = 0;
     int curbuf = 0;
+    bool markerFound = false;
+    int marker = 0;
     while (*syncbool) {
-        if (fStream.eof()) {
+        marker = 0;
+        markerFound = false;
+        fStream.read(reinterpret_cast<char *>(&marker), sizeof(int));
+        if(marker == 233)
+            markerFound = true;
+
+        if (!markerFound) {
             exit_reason = 2;
             break;
         }
@@ -82,6 +90,9 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
 
         curbuf = (curbuf + i) % 2;
         buf->mutex[curbuf].lock();
+        int temp = 233;
+        memcpy(buf->buf[curbuf] + buf->offset[curbuf], &temp, sizeof(int));
+        buf->offset[curbuf] += sizeof(int);
         memcpy(buf->buf[curbuf] + buf->offset[curbuf], &chunk, sizeof(chunk));
         buf->offset[curbuf] += sizeof(chunk);
         memcpy(buf->buf[curbuf] + buf->offset[curbuf], reinterpret_cast<void *>(vidbuf), 18 * 1024 * 1024);

@@ -35,8 +35,10 @@ int main() {
     mlv_vidf_hdr_t vidf_hdr;
     Populatevidf(&vidf_hdr);
 
+    int marker = 233;
     cout << "Generating Frames\n";
     for (int i = 0; i < framesCount; i++) {
+        frames.write(reinterpret_cast<char *>(&marker), sizeof(int));
         frames.write(reinterpret_cast<char *>(&vidf_hdr), sizeof(vidf_hdr));
         frames.write(raw12Data, 18 * 1024 * 1024);
         cout << "\rOf " << framesCount << " written " << i + 1;
@@ -56,10 +58,14 @@ int main() {
     Populatelens(&lens_hdr);
 
     cout << "Generating Meta ";
+    meta<<233;
     meta.write(reinterpret_cast<char *>(&file_hdr), sizeof(mlv_file_hdr_t));
+    meta<<233;
     meta.write(reinterpret_cast<char *>(&rawi_hdr), sizeof(mlv_rawi_hdr_t));
     //meta.write(reinterpret_cast<char *>(&rawi_hdr.raw_info), sizeof(raw_info_t));
+    meta<<233;
     meta.write(reinterpret_cast<char *>(&expo_hdr), sizeof(mlv_expo_hdr_t));
+    meta<<233;
     meta.write(reinterpret_cast<char *>(&lens_hdr), sizeof(mlv_lens_hdr_t));
     cout << "done" << endl;
 
@@ -97,7 +103,7 @@ void Populaterawi(mlv_rawi_hdr_t *block) {
 
 void Populatevidf(mlv_vidf_hdr_t *block) {
     memcpy(reinterpret_cast<char *>(&(block->blockType)), "VIDF", 4);
-    block->blockSize = 32; // Check if it is correct (header size or header + frame size)
+    block->blockSize = 32 + 18*1024*1024; // Check if it is correct (header size or header + frame size)
     block->timestamp = 0;
     block->frameNumber = 0;
     block->cropPosX = 0;
@@ -144,7 +150,7 @@ void Populaterawinfot(raw_info_t *block){
     block->height = 3072;
     block->width = 4092;
     block->bits_per_pixel = 12;
-    block->pitch = block->width*12/8;
+    block->pitch = (block->width*12)/8;
     block->frame_size = block->height*block->pitch;
     block->black_level = 0;
     block->white_level = 15000;

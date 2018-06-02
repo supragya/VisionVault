@@ -25,7 +25,12 @@ void RawStreamHandler::MetaManEntry(const char *metaStreamLoc, const char *metaC
     std::string blocksEncountered = "";
     uint8_t *blockType[4];
     std::map<std::string, uint8_t>::iterator iter;
-    while(!metaStream.eof()){
+    bool markerFound = false;
+    int marker;
+    metaStream>>marker;
+    if(marker == 233)
+        markerFound = true;
+    while(markerFound){
         metaStream.read(reinterpret_cast<char *>(blockType), 4);
         std::cout<<"Meta Block: "<< reinterpret_cast<char *>(blockType)<<" encountered"<<std::endl;
         if (std::string(reinterpret_cast<char *>(blockType)).compare("")==0){
@@ -47,6 +52,13 @@ void RawStreamHandler::MetaManEntry(const char *metaStreamLoc, const char *metaC
             std::cout<<"MetaMan: Buffer overflow error! "<<std::endl;
             return;
         }
+
+        marker = 0;
+        markerFound = false;
+        metaStream>>marker;
+        if(marker == 233)
+            markerFound = true;
+
     }
     std::cout<<"MetaMan: metaStream read into memory buffer"<<std::endl;
 
