@@ -24,11 +24,19 @@ void RawStreamHandler::FrameManEntry(const char *frameStreamLoc, const char *fra
     fb.offset[0] = fb.offset[1] = 0;
 
     bool syncbool = true;
+    auto start = std::chrono::system_clock::now();
     std::thread StreamHandler(FrameStreamHandler, &syncbool, &fb, frameStreamLoc);
     std::thread DiskHandler(FrameDiskHandler, &syncbool, &fb, frameCache);
 
+
     StreamHandler.join();
     DiskHandler.join();
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_second_ = end - start;
+    double elapsed_second = elapsed_second_.count();
+
+    std::cout << "Frame time per frame: " << elapsed_second/100 << "(avg), max: " << 100 / elapsed_second << " per second"
+              << std::endl;
 
     delete fb.buf[0];
     delete fb.buf[1];
