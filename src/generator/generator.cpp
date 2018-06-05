@@ -16,7 +16,7 @@ using namespace std;
 int main() {
     const char *frameFile = "frameData.dat";
     const char *metaFile = "metaData.dat";
-    const int framesCount = 100;
+    const int framesCount = 150;
 
     cout.setf(std::ios_base::unitbuf);
     cout << "Axiom Stream Generator" << endl;

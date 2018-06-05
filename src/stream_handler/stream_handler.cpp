@@ -85,19 +85,31 @@ int main() {
     const char metaCache[] = "metaCache.dat";
     const char finalMlv[] = "axiom.mlv";
 
+    auto start = std::chrono::system_clock::now();
     thread frameThread(RawStreamHandler::FrameManEntry, frameStreamLoc, frameCache);
     thread metaThread(RawStreamHandler::MetaManEntry, metaStreamLoc, metaCache);
     frameThread.join();
     metaThread.join();
-
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_second_ = end - start;
+    double elapsed_second = elapsed_second_.count();
     cout << "Done receiving from streams, begin merge to single cache" << endl;
-
+    std::cout << "Caching took: (seconds) " << elapsed_second << std::endl;
     const char *caches[2] = {metaCache, frameCache};
+
 
     joinCache(finalMlv, caches, 2);
 
+    auto end2 = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_second__ = end2 - end;
+    elapsed_second = elapsed_second__.count();
+
+    std::cout << "Joining took: (seconds) " << elapsed_second << std::endl;
     cout << "Cache joining done, mlv is now ready at " << finalMlv << endl;
 
+    std::chrono::duration<double> elapsed_second___ = end2 - start;
+    elapsed_second = elapsed_second___.count();
+    std::cout << "Net time took: (seconds) " << elapsed_second << std::endl;
     cout << "\n>>>Emulation ends here" << endl;
 
 

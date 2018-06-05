@@ -21,7 +21,7 @@ static const char *filepath = "/metaStream";
 static const char *filename = "metaStream";
 
 // Input file location
-const char INPUT_FILE[] = "metaStream.dat";
+const char INPUT_FILE[] = "/home/supragya/Projects/AXIOM_RawStreamHandler/bin/metaData.dat";
 uint8_t *metaStreamMem;
 uint32_t metaStreamSize;
 
@@ -48,6 +48,10 @@ operations fuse_example_operations = {
 
 void load2memory(const char *fileName) {
     FILE *file = fopen(fileName, "r");
+    if(file == NULL){
+        printf("Error opening file");
+        return;
+    }
     fseek(file, 0L, SEEK_END);
     long metaStreamSize = ftell(file);
     rewind(file);

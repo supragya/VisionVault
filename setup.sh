@@ -6,6 +6,9 @@ echo "on disk test / benchmarking"
 echo "--------------------------------------------------------"
 echo "- requires root access"
 
+echo "=== Testing recording device speed"
+sudo hdparm -Tt /dev/sda
+
 sudo rm -r bin/
 echo "=== Beginning building binaries for emulation"
 mkdir build

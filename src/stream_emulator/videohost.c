@@ -18,7 +18,7 @@ static const char *filepath = "/frameStream";
 static const char *filename = "frameStream";
 
 // Input file location
-const char INPUT_FILE[] = "frameStream.dat";
+const char INPUT_FILE[] = "/home/supragya/Projects/AXIOM_RawStreamHandler/bin/frameData.dat";
 uint8_t *frameStreamMem;
 uint32_t frameStreamSize;
 
@@ -44,8 +44,13 @@ static struct fuse_operations fuse_example_operations = {
 
 void load2memory(const char *fileName) {
     FILE *file = fopen(fileName, "r");
+    if(file == NULL){
+        printf("Error opening file");
+        return;
+    }
     fseek(file, 0L, SEEK_END);
     long frameStreamSize = ftell(file);
+    printf("Size %d", frameStreamSize);
     rewind(file);
 
     frameStreamMem = (uint8_t *) malloc(frameStreamSize);
@@ -57,6 +62,7 @@ int main(int argc, char *argv[]) {
     // Begin LibFUSE, register the functions with libfuse by sending function references
     printf("FrameStream emulator running\n");
     load2memory(INPUT_FILE);
+    printf(".");
     return fuse_main(argc, argv, &fuse_example_operations, NULL);
 }
 

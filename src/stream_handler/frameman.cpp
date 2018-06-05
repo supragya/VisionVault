@@ -17,7 +17,7 @@ using namespace RawStreamHandler;
 void RawStreamHandler::FrameManEntry(const char *frameStreamLoc, const char *frameCache) {
     // Create new struct
     FrameBuffer fb;
-    fb.bufsize = 512 * 1024 * 1024; // 512MB
+    fb.bufsize = 128 * 1024 * 1024; // 128MB
     fb.buf[0] = new char[fb.bufsize];
     fb.buf[1] = new char[fb.bufsize];
     fb.filled[0] = fb.filled[1] = false;
@@ -35,7 +35,7 @@ void RawStreamHandler::FrameManEntry(const char *frameStreamLoc, const char *fra
     std::chrono::duration<double> elapsed_second_ = end - start;
     double elapsed_second = elapsed_second_.count();
 
-    std::cout << "Frame time per frame: " << elapsed_second/100 << "(avg), max: " << 100 / elapsed_second << " per second"
+    std::cout << "Frame time per frame: " << elapsed_second/150 << "(avg), max: " << 150 / elapsed_second << " per second"
               << std::endl;
 
     delete fb.buf[0];
