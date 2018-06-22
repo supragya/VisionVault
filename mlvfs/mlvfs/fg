@@ -1,0 +1,75 @@
+ExifTool Version Number         : 11.02
+File Name                       : 5DII_14may14_blfixOFF_000001.dng
+Directory                       : /media/mlv/5DII_14may14_blfixOFF.MLV
+File Size                       : 3.8 MB
+File Modification Date/Time     : 2014:05:16 01:52:13+05:30
+File Access Date/Time           : 2014:05:16 01:52:13+05:30
+File Inode Change Date/Time     : 2014:05:16 01:52:13+05:30
+File Permissions                : rw-rw-rw-
+File Type                       : DNG
+File Type Extension             : dng
+MIME Type                       : image/x-adobe-dng
+Exif Byte Order                 : Little-endian (Intel, II)
+Subfile Type                    : Full-resolution Image
+Image Width                     : 1856
+Image Height                    : 1044
+Bits Per Sample                 : 16
+Compression                     : Uncompressed
+Photometric Interpretation      : Color Filter Array
+Fill Order                      : Normal
+Make                            : Canon
+Camera Model Name               : Canon EOS 5D Mark II
+Strip Offsets                   : 65536
+Orientation                     : Horizontal (normal)
+Samples Per Pixel               : 1
+Rows Per Strip                  : 1044
+Strip Byte Counts               : 3875328
+Planar Configuration            : Chunky
+Software                        : MLVFS
+Modify Date                     : 2014:05:16 01:52:13
+CFA Repeat Pattern Dim          : 2 2
+CFA Pattern 2                   : 0 1 1 2
+Exposure Time                   : 1/48
+F Number                        : 4.0
+ISO                             : 400
+Sensitivity Type                : ISO Speed
+Exif Version                    : 0230
+Subject Distance                : 70 m
+Focal Length                    : 105.0 mm
+Focal Plane X Resolution        : 1283.070596
+Focal Plane Y Resolution        : 1302.713987
+Focal Plane Resolution Unit     : inches
+Lens Model                      : EF24-105mm f/4L IS USM
+DNG Version                     : 1.4.0.0
+Unique Camera Model             : Canon EOS 5D Mark II
+Black Level                     : 1792
+White Level                     : 15000
+Default Scale                   : 1 1
+Default Crop Origin             : 0 0
+Default Crop Size               : 1856 1044
+Color Matrix 1                  : 0.5309 -0.0229 -0.0336 -0.6241 1.3265 0.3337 -0.0817 0.1215 0.6664
+Color Matrix 2                  : 0.4716 0.0603 -0.083 -0.7798 1.5474 0.248 -0.1496 0.1937 0.6651
+As Shot Neutral                 : 0.4225005186 1 0.6434584088
+Baseline Exposure               : 0
+Camera Serial Number            : 8AF4F7AC
+Calibration Illuminant 1        : Standard Light A
+Calibration Illuminant 2        : D65
+Active Area                     : 0 0 1044 1856
+Forward Matrix 1                : 0.8924 -0.1041 0.176 0.4351 0.6621 -0.0972 0.0505 -0.1562 0.9308
+Forward Matrix 2                : 0.8924 -0.1041 0.176 0.4351 0.6621 -0.0972 0.0505 -0.1562 0.9308
+Time Codes                      : 00:00:00.01
+Frame Rate                      : 23.976
+Reel Name                       : /5DII_14may14_blfixOFF.MLV
+Baseline Exposure Offset        : 0
+Aperture                        : 4.0
+CFA Pattern                     : [Red,Green][Green,Blue]
+Image Size                      : 1856x1044
+Megapixels                      : 1.9
+Scale Factor To 35 mm Equivalent: 1.0
+Shutter Speed                   : 1/48
+Circle Of Confusion             : 0.029 mm
+Depth Of Field                  : 228.68 m (40.24 - 268.92 m)
+Field Of View                   : 18.9 deg
+Focal Length                    : 105.0 mm (35 mm equivalent: 108.2 mm)
+Hyperfocal Distance             : 94.49 m
+Light Value                     : 7.6
