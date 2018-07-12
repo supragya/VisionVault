@@ -638,7 +638,7 @@ size_t dng_get_header_data(struct frame_headers * frame_headers, uint8_t * outpu
         memcpy(serial, frame_headers->idnt_hdr.cameraSerial, 32);
         serial[32] = 0x0; //make sure we are null terminated
 
-        #define linearization_steps 8
+        #define linearization_steps 0
 
         uint32_t linearization_table_offset = (uint32_t)(position + sizeof(uint16_t) + IFD0_COUNT * sizeof(struct directory_entry) + sizeof(uint32_t));
         uint32_t exif_ifd_offset = linearization_table_offset + linearization_steps * linearization_steps * linearization_steps * sizeof(uint16_t);
@@ -742,7 +742,7 @@ size_t dng_get_header_data(struct frame_headers * frame_headers, uint8_t * outpu
             {tcExifIFD,                     ttLong,     1,      exif_ifd_offset},
             {tcDNGVersion,                  ttByte,     4,      0x00000401}, //1.4.0.0 in little endian
             {tcUniqueCameraModel,           ttAscii,    STRING_ENTRY(model, header, &data_offset)},
-            {tcLinearizationTable,          ttShort,    linearization_steps,      linearization_table_offset},
+            //{tcLinearizationTable,          ttShort,    linearization_steps,      linearization_table_offset},
             {tcBlackLevel,                  ttLong,     1,      frame_headers->rawi_hdr.raw_info.black_level},
             {tcWhiteLevel,                  ttLong,     1,      frame_headers->rawi_hdr.raw_info.white_level},
             {tcDefaultScale,                ttRational, RATIONAL_ENTRY(par, header, &data_offset, 4)},
@@ -781,9 +781,9 @@ size_t dng_get_header_data(struct frame_headers * frame_headers, uint8_t * outpu
 
         add_ifd(IFD0, header, &position, IFD0_COUNT, linearization_steps * sizeof(uint16_t));
 
-        uint16_t linearization_table[linearization_steps] = {12,33,42,50,2111,3000,4114,21000};
-        memcpy(header+position, linearization_table, linearization_steps * sizeof(uint16_t));
-        position += sizeof(uint16_t) * linearization_steps;
+        // uint16_t linearization_table[linearization_steps] = {12,33,42,50,2111,3000,4114,21000};
+        // memcpy(header+position, linearization_table, linearization_steps * sizeof(uint16_t));
+        // position += sizeof(uint16_t) * linearization_steps;
 
         add_ifd(EXIF_IFD, header, &position, EXIF_IFD_COUNT, 0);
 

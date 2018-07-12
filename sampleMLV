@@ -1,0 +1,1049 @@
+
+ MLV Dumper v1.0
+-----------------
+
+Mode of operation:
+   - Input MLV file: '/home/supragya/Downloads/5DII_14may14_blfixOFF.MLV'
+   - Verbose messages
+   - Convert to DNG frames
+   - Output into '/home/supragya/Downloads/5DII_14may14_blfixOFF_'
+File /home/supragya/Downloads/5DII_14may14_blfixOFF.MLV opened
+File /home/supragya/Downloads/5DII_14may14_blfixOFF.M00 not existing.
+Processing...
+File Header (MLVI)
+    Size        : 0x00000034
+    Ver         : v2.0
+    GUID        : 3107363179366329747
+    FPS         : 23.976000
+    File        : 0 / 0
+    Frames Video: 18
+    Frames Audio: 3
+Block: RAWI
+  Offset: 0x00000034
+    Size: 180
+    Time: 203.154000 ms
+    Res:  1856x1044
+    raw_info:
+      api_version      0x00000001
+      height           1268
+      width            2040
+      pitch            3570
+      frame_size       0x004512A8
+      bits_per_pixel   14
+      black_level      1792
+      white_level      15000
+      active_area.y1   18
+      active_area.x1   160
+      active_area.y2   1268
+      active_area.x2   2040
+      exposure_bias    0, 0
+      cfa_pattern      0x02010100
+      calibration_ill  1
+Block: INFO
+  Offset: 0x000000e8
+    Size: 16
+    Time: 206.428000 ms
+Block: RTCI
+  Offset: 0x000000f8
+    Size: 44
+    Time: 0.001000 ms
+     Date:        16.05.2014
+     Time:        01:52:13 (GMT+0)
+     Zone:        ''
+     Day of week: 64
+     Day of year: 0
+     Daylight s.: 0
+Block: EXPO
+  Offset: 0x00000124
+    Size: 40
+    Time: 0.002000 ms
+     ISO Mode:   0
+     ISO:        400
+     ISO Analog: 88
+     ISO DGain:  0/1024 EV
+     Shutter:    21348 microseconds (1/46.84)
+Block: LENS
+  Offset: 0x0000014c
+    Size: 96
+    Time: 0.003000 ms
+     Name:        'EF24-105mm f/4L IS USM'
+     Serial:      ''
+     Focal Len:   105 mm
+     Focus Dist:  70 mm
+     Aperture:    f/4.00
+     IS Mode:     14
+     AF Mode:     3
+     Lens ID:     0x000000ED
+     Flags:       0x00000000
+Block: IDNT
+  Offset: 0x000001ac
+    Size: 84
+    Time: 0.004000 ms
+     Camera Name:   'Canon EOS 5D Mark II'
+     Camera Serial: '8AF4F7AC'
+     Camera Model:  0x80000218
+Block: WBAL
+  Offset: 0x00000200
+    Size: 44
+    Time: 0.005000 ms
+     Mode:   1
+     Kelvin:   5200
+     Gain R:   461
+     Gain G:   1024
+     Gain B:   590
+     Shift GM:   0
+     Shift BA:   -4
+Block: STYL
+  Offset: 0x0000022c
+    Size: 52
+    Time: 0.006000 ms
+     picStyle:   132
+     contrast:   -4
+     sharpness:  2
+     saturation: -2
+     colortone:  0
+Block: WAVI
+  Offset: 0x00000260
+    Size: 32
+    Time: 380.568000 ms
+    wav_info:
+      format           1
+      channels         2
+      samplingRate     48000
+      bytesPerSecond   192000
+      blockAlign       4
+      bitsPerSample    16
+Block: RTCI
+  Offset: 0x00000280
+    Size: 48
+    Time: 381.386000 ms
+     Date:        16.05.2014
+     Time:        01:52:13 (GMT+0)
+     Zone:        ''
+     Day of week: 64
+     Day of year: 0
+     Daylight s.: 0
+Block: MARK
+  Offset: 0x000002b0
+    Size: 32
+    Time: 425.869000 ms
+  Button: 0x00
+Block: VIDF
+  Offset: 0x000002d0
+    Size: 3394896
+    Time: 400.328000 ms
+   Frame: #0000
+    Crop: 160x128
+     Pan: 160x121
+   Space: 3952
+
+
+Vertical stripes correction:
+  1.00000  1.00476  0.99962  0.99979  1.00313  1.00188  1.00148  1.00304
+Cold pixels : 0                             
+Block: NULL
+  Offset: 0x0033d020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x0033d260
+    Size: 3395008
+    Time: 441.802000 ms
+   Frame: #0001
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x0067a020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x0067a260
+    Size: 3395008
+    Time: 483.629000 ms
+   Frame: #0002
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x009b7020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x009b7260
+    Size: 3395008
+    Time: 525.277000 ms
+   Frame: #0003
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x00cf4020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x00cf4260
+    Size: 3395008
+    Time: 608.624000 ms
+   Frame: #0005
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x01031020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x01031260
+    Size: 3395008
+    Time: 650.433000 ms
+   Frame: #0006
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x0136e020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x0136e260
+    Size: 3395008
+    Time: 900.602000 ms
+   Frame: #0012
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x016ab020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x016ab260
+    Size: 3395008
+    Time: 942.238000 ms
+   Frame: #0013
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x019e8020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x019e8260
+    Size: 3395008
+    Time: 984.038000 ms
+   Frame: #0014
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x01d25020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x01d25260
+    Size: 3395008
+    Time: 1025.665000 ms
+   Frame: #0015
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x02062020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: NULL
+  Offset: 0x02062260
+    Size: 256
+    Time: 0.000000 ms
+Block: NULL
+  Offset: 0x02062360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0206ba60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02075160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0207e860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02087f60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02091660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0209ad60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x020a4460
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x020adb60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x020b7260
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x020c0960
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x020ca060
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x020d3760
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x020dce60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x020e6560
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x020efc60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x020f9360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02102a60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0210c160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02115860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0211ef60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02128660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02131d60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0213b460
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02144b60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0214e260
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02157960
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02161060
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0216a760
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02173e60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0217d560
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02186c60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02190360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02199a60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x021a3160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x021ac860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x021b5f60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x021bf660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x021c8d60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x021d2460
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x021dbb60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x021e5260
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x021ee960
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x021f8060
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02201760
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0220ae60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02214560
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0221dc60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02227360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02230a60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0223a160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02243860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0224cf60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02256660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0225fd60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02269460
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02272b60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0227c260
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02285960
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0228f060
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02298760
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x022a1e60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x022ab560
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x022b4c60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x022be360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x022c7a60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x022d1160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x022da860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x022e3f60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x022ed660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x022f6d60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02300460
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02309b60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02313260
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0231c960
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02326060
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0232f760
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02338e60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02342560
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0234bc60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02355360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0235ea60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02368160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02371860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0237af60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02384660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0238dd60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02397460
+    Size: 32256
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0239f260
+    Size: 256
+    Time: 0.000000 ms
+Block: AUDF
+  Offset: 0x0239f360
+    Size: 38656
+    Time: 401.718000 ms
+   Frame: #0000
+   Space: 232
+Block: AUDF
+  Offset: 0x023a8a60
+    Size: 38656
+    Time: 601.897000 ms
+   Frame: #0001
+   Space: 232
+Block: AUDF
+  Offset: 0x023b2160
+    Size: 38656
+    Time: 1035.405000 ms
+   Frame: #0002
+   Space: 232
+Block: NULL
+  Offset: 0x023bb860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x023c4f60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x023ce660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x023d7d60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x023e1460
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x023eab60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x023f4260
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x023fd960
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02407060
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02410760
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02419e60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02423560
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0242cc60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02436360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0243fa60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02449160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02452860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0245bf60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02465660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0246ed60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02478460
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02481b60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0248b260
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02494960
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0249e060
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x024a7760
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x024b0e60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x024ba560
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x024c3c60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x024cd360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x024d6a60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x024e0160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x024e9860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x024f2f60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x024fc660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02505d60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0250f460
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02518b60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02522260
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0252b960
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02535060
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0253e760
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02547e60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02551560
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0255ac60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02564360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0256da60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02577160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02580860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02589f60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02593660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0259cd60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x025a6460
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x025afb60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x025b9260
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x025c2960
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x025cc060
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x025d5760
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x025dee60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x025e8560
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x025f1c60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x025fb360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02604a60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0260e160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02617860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02620f60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0262a660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02633d60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0263d460
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02646b60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02650260
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02659960
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02663060
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0266c760
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02675e60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0267f560
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02688c60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x02692360
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x0269ba60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x026a5160
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x026ae860
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x026b7f60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x026c1660
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x026cad60
+    Size: 38656
+    Time: 18446744073709552.000000 ms
+Block: NULL
+  Offset: 0x026d4460
+    Size: 32256
+    Time: 18446744073709552.000000 ms
+Block: VIDF
+  Offset: 0x026dc260
+    Size: 3395008
+    Time: 733.799000 ms
+   Frame: #0008
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x02a19020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x02a19260
+    Size: 3395008
+    Time: 775.393000 ms
+   Frame: #0009
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x02d56020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x02d56260
+    Size: 3395008
+    Time: 817.212000 ms
+   Frame: #0010
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x03093020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x03093260
+    Size: 3395008
+    Time: 858.929000 ms
+   Frame: #0011
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x033d0020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x033d0260
+    Size: 3395008
+    Time: 567.272000 ms
+   Frame: #0004
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x0370d020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Block: VIDF
+  Offset: 0x0370d260
+    Size: 3395008
+    Time: 691.997000 ms
+   Frame: #0007
+    Crop: 160x128
+     Pan: 160x121
+   Space: 4064
+Block: NULL
+  Offset: 0x03a4a020
+    Size: 576
+    Time: 11936128518282652.000000 ms
+Reached end of chunk 1/1 after 222 blocks
+Processed 16 video frames
+Done
+

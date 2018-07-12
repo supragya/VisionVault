@@ -24,6 +24,8 @@ void Populateexpo(mlv_expo_hdr_t *);
 
 void Populaterawinfot(raw_info_t *);
 
+void Populatertci(mlv_rtci_hdr_t *);
+
 char *Zeros(int size);
 
 #endif

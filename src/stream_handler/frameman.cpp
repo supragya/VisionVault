@@ -59,7 +59,7 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
         exit_reason = 1;
 
     mlv_vidf_hdr_t chunk = {0};
-    char *vidbuf = new char[18 * 1024 * 1024]; // 18MB
+    char *vidbuf = new char[12*4096*3072/8]; // 18MB
     bool entrypossible;
     int i;
     int numFrames = 0;
@@ -78,14 +78,14 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
             break;
         }
         fStream.read(reinterpret_cast<char *>(&chunk), sizeof(chunk));
-        fStream.read(reinterpret_cast<char *>(vidbuf), 18 * 1024 * 1024);
+        fStream.read(reinterpret_cast<char *>(vidbuf), 12*4096*3072/8);
         entrypossible = false;
         // TODO: Rectify this code to alternate between buffers
         do {
             for (i = 0; i < 2; i++) {
                 if (buf->filled[(curbuf + i) % 2])
                     continue;
-                else if (buf->offset[(curbuf + i) % 2] + sizeof(chunk) + 18 * 1024 * 1024 > buf->bufsize) {
+                else if (buf->offset[(curbuf + i) % 2] + sizeof(chunk) + 12*4096*3072/8 > buf->bufsize) {
                     buf->filled[(curbuf + i) % 2] = true;
                     continue;
                 } else {
@@ -103,8 +103,8 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
         buf->offset[curbuf] += sizeof(int);
         memcpy(buf->buf[curbuf] + buf->offset[curbuf], &chunk, sizeof(chunk));
         buf->offset[curbuf] += sizeof(chunk);
-        memcpy(buf->buf[curbuf] + buf->offset[curbuf], reinterpret_cast<void *>(vidbuf), 18 * 1024 * 1024);
-        buf->offset[curbuf] += 18 * 1024 * 1024;
+        memcpy(buf->buf[curbuf] + buf->offset[curbuf], reinterpret_cast<void *>(vidbuf), 12*4096*3072/8);
+        buf->offset[curbuf] +=  12*4096*3072/8;
         buf->mutex[curbuf].unlock();
         std::cout << std::setprecision(2) << "Frame " << numFrames << " in buf " << curbuf << " sizes ["
                   << (float) buf->offset[0] * 100 / buf->bufsize << "%,"
