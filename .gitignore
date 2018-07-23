@@ -52,3 +52,5 @@ Module.symvers
 Mkfile.old
 cmake-build-debug/
 dkms.conf
+processed_data/
+bin/

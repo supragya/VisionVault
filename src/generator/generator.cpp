@@ -51,7 +51,7 @@ void prepare_frames() {
             exit(1);
         }
 
-        raw12file.read((char *) raw, VIDFRAMESIZE);
+        raw12file.read(reinterpret_cast<char *>(raw), VIDFRAMESIZE);
         raw12file.close();
 
         int pos_list = 0, pos_raw = 0;

@@ -9,7 +9,7 @@ using namespace RawStreamHandler;
 void RawStreamHandler::MetaManEntry(const char *metaStreamLoc, const char *metaCache) {
     // Create Buffer
     int buffersize = 128 * 1024 * 1024;
-    char *buf = new char[buffersize];
+    auto *buf = new uint8_t[buffersize];
 
     std::ifstream metaStream(metaStreamLoc, std::ios::binary | std::ios::in);
 
@@ -20,45 +20,33 @@ void RawStreamHandler::MetaManEntry(const char *metaStreamLoc, const char *metaC
         std::cout << "MetaMan: Success in accessing stream " << metaStreamLoc << std::endl;
     }
 
-    std::map<std::string, uint8_t> sizeChart = getMlvSizes();
     int offset = 0;
     std::string blocksEncountered = "";
-    uint8_t *blockType[4];
-    std::map<std::string, uint8_t>::iterator iter;
-    bool markerFound = false;
-    int marker;
-    metaStream>>marker;
-    if(marker == 233)
-        markerFound = true;
-    while(markerFound){
-        metaStream.read(reinterpret_cast<char *>(blockType), 4);
+    uint8_t blockType[4];
+    uint32_t blockSize;
+
+    while(!metaStream.eof()){
+        metaStream.read(reinterpret_cast<char *>(&blockType), 4);
         std::cout<<"Meta Block: "<< reinterpret_cast<char *>(blockType)<<" encountered"<<std::endl;
+
         if (std::string(reinterpret_cast<char *>(blockType)).compare("")==0){
             std::cout<<"MetaMan: Found unnamed blockType. Assuming eof."<<std::endl;
             break;
         }
-        iter = sizeChart.find(std::string(reinterpret_cast<char *>(blockType)));
-        if(iter == sizeChart.end()){
-            std::cout<<"MetaMan: Could not find size of meta block in sizeChart"<<std::endl;
-            break;
-        }
+
+        metaStream.read(reinterpret_cast<char*>(&blockSize), sizeof(uint32_t));
+
         memcpy(buf+offset, blockType, 4);
         offset += 4;
-        metaStream.read(buf + offset, iter->second - 4);
-        offset += iter->second - 4;
+        memcpy(buf + offset, reinterpret_cast<char *>(&blockSize), sizeof(uint32_t));
+        offset += sizeof(uint32_t);
+        metaStream.read(reinterpret_cast<char*>(buf) + offset, blockSize - 4 - sizeof(uint32_t));
         blocksEncountered += std::string(reinterpret_cast<char *>(blockType));
         blocksEncountered += " ";
         if(offset > buffersize){
             std::cout<<"MetaMan: Buffer overflow error! "<<std::endl;
             return;
         }
-
-        marker = 0;
-        markerFound = false;
-        metaStream>>marker;
-        if(marker == 233)
-            markerFound = true;
-
     }
     std::cout<<"MetaMan: metaStream read into memory buffer"<<std::endl;
 
@@ -67,7 +55,7 @@ void RawStreamHandler::MetaManEntry(const char *metaStreamLoc, const char *metaC
         std::cout<<"MetaMan: Cache file could not be opened "<<metaCache<<std::endl;
     }
     else{
-        out.write(buf, offset);
+        out.write(reinterpret_cast<char *>(buf), offset);
         std::cout<<"MetaMan: Cache file writing done"<<metaCache<<std::endl;
     }
     out.close();

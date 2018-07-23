@@ -11,7 +11,6 @@
 
 #define min(a, b) (a>b ? b : a)
 
-
 using namespace std;
 
 void joinCache(const char *finalMlv, const char *cache[], int size) {
@@ -79,11 +78,11 @@ int main() {
     cout << ">>> AXIOM RVCF Emulation - disk emulation\n" << endl;
     cout << "Spawning threads - frame and meta" << endl;
 
-    const char frameStreamLoc[] = "frameData.dat";
-    const char metaStreamLoc[] = "metaData.dat";
-    const char frameCache[] = "frameCache.dat";
-    const char metaCache[] = "metaCache.dat";
-    const char finalMlv[] = "axiom.mlv";
+    const char frameStreamLoc[] = "../processed_data/cam_framedata.rawdata";
+    const char metaStreamLoc[] = "../processed_data/cam_metadata.rawinfo";
+    const char frameCache[] = "../processed_data/RSH_frameCache.rawdata";
+    const char metaCache[] = "../processed_data/RSH_metaCache.rawinfo";
+    const char finalMlv[] = "../processed_data/axiom_beta_video.mlv";
 
     auto start = std::chrono::system_clock::now();
     thread frameThread(RawStreamHandler::FrameManEntry, frameStreamLoc, frameCache);
@@ -96,7 +95,6 @@ int main() {
     cout << "Done receiving from streams, begin merge to single cache" << endl;
     std::cout << "Caching took: (seconds) " << elapsed_second << std::endl;
     const char *caches[2] = {metaCache, frameCache};
-
 
     joinCache(finalMlv, caches, 2);
 

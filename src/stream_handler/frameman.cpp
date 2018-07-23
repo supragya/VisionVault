@@ -12,6 +12,8 @@
 #include <memory.h>
 #include <iomanip>
 
+#define VIDEOFRAMESIZE (12*4096*3072/8)
+
 using namespace RawStreamHandler;
 
 void RawStreamHandler::FrameManEntry(const char *frameStreamLoc, const char *frameCache) {
@@ -35,7 +37,8 @@ void RawStreamHandler::FrameManEntry(const char *frameStreamLoc, const char *fra
     std::chrono::duration<double> elapsed_second_ = end - start;
     double elapsed_second = elapsed_second_.count();
 
-    std::cout << "Frame time per frame: " << elapsed_second/150 << "(avg), max: " << 150 / elapsed_second << " per second"
+    std::cout << "Frame time per frame: " << elapsed_second / 150 << "(avg), max: " << 150 / elapsed_second
+              << " per second"
               << std::endl;
 
     delete fb.buf[0];
@@ -59,7 +62,7 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
         exit_reason = 1;
 
     mlv_vidf_hdr_t chunk = {0};
-    char *vidbuf = new char[12*4096*3072/8]; // 18MB
+    auto *vidbuf = new uint8_t[VIDEOFRAMESIZE];
     bool entrypossible;
     int i;
     int numFrames = 0;
@@ -67,25 +70,21 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
     bool markerFound = false;
     int marker = 0;
     while (*syncbool) {
-        marker = 0;
-        markerFound = false;
-        fStream.read(reinterpret_cast<char *>(&marker), sizeof(int));
-        if(marker == 233)
-            markerFound = true;
-
-        if (!markerFound) {
+        if (fStream.eof()) {
             exit_reason = 2;
             break;
         }
+
         fStream.read(reinterpret_cast<char *>(&chunk), sizeof(chunk));
-        fStream.read(reinterpret_cast<char *>(vidbuf), 12*4096*3072/8);
+        fStream.read(reinterpret_cast<char *>(vidbuf), VIDEOFRAMESIZE);
         entrypossible = false;
+
         // TODO: Rectify this code to alternate between buffers
         do {
             for (i = 0; i < 2; i++) {
                 if (buf->filled[(curbuf + i) % 2])
                     continue;
-                else if (buf->offset[(curbuf + i) % 2] + sizeof(chunk) + 12*4096*3072/8 > buf->bufsize) {
+                else if (buf->offset[(curbuf + i) % 2] + sizeof(chunk) + VIDEOFRAMESIZE > buf->bufsize) {
                     buf->filled[(curbuf + i) % 2] = true;
                     continue;
                 } else {
@@ -103,8 +102,8 @@ void RawStreamHandler::FrameStreamHandler(bool *syncbool, FrameBuffer *buf, cons
         buf->offset[curbuf] += sizeof(int);
         memcpy(buf->buf[curbuf] + buf->offset[curbuf], &chunk, sizeof(chunk));
         buf->offset[curbuf] += sizeof(chunk);
-        memcpy(buf->buf[curbuf] + buf->offset[curbuf], reinterpret_cast<void *>(vidbuf), 12*4096*3072/8);
-        buf->offset[curbuf] +=  12*4096*3072/8;
+        memcpy(buf->buf[curbuf] + buf->offset[curbuf], reinterpret_cast<void *>(vidbuf), VIDEOFRAMESIZE);
+        buf->offset[curbuf] += VIDEOFRAMESIZE;
         buf->mutex[curbuf].unlock();
         std::cout << std::setprecision(2) << "Frame " << numFrames << " in buf " << curbuf << " sizes ["
                   << (float) buf->offset[0] * 100 / buf->bufsize << "%,"
@@ -181,7 +180,7 @@ void RawStreamHandler::FrameDiskHandler(bool *syncbool, FrameBuffer *buf, const 
         }
     }
 
-    std::cout << std::setprecision(2) <<"FrameDiskHandler report: sizes ["
+    std::cout << std::setprecision(2) << "FrameDiskHandler report: sizes ["
               << (float) buf->offset[0] * 100 / buf->bufsize << "%,"
               << (float) buf->offset[1] * 100 / buf->bufsize
               << "%] " << " filled status: [" << buf->filled[0] << "," << buf->filled[1] << "] "
