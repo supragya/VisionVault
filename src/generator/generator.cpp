@@ -1,205 +1,151 @@
-//
-// Copyright 2018, Supragya Raj
-// licensed under MIT License (for RawStreamHandler).
-//
-
-// TODO: Does using MLV code make us conform to GNU GPLv2 too?
-
 #include <iostream>
-#include <memory.h>
 #include <fstream>
+#include <vector>
 #include "generator.h"
-#include "../common/mlv.h"
+#include "mlv_filler.h"
 
-uint32_t VIDF_FRAMESIZE = 12*4096*3072/8;
+#define FRAMECOUNT 3
 
 using namespace std;
 
 int main() {
-    const char *frameFile = "frameData.dat";
-    const char *metaFile = "metaData.dat";
-    const char *test12 = "../test_raw12/test.raw12";
-    const int framesCount = 1;
+    cout << "Begin preparing meta stream (low speed)" << endl;
+    prepare_meta();
+    cout << "End preparing meta stream (low speed) - done" << endl;
 
-    cout.setf(std::ios_base::unitbuf);
-    cout << "Axiom Stream Generator" << endl;
-
-    ofstream frames(frameFile, ios::binary | ios::trunc | ios::out);
-    ofstream meta(metaFile, ios::binary | ios::trunc | ios::out);
-
-    if (!frames.is_open() || !meta.is_open()) {
-        cout << "Generator could not open either of frames or meta file" << endl;
-        return 1;
-    }
-
-    // Frame file generation
-
-    char *raw12Data = Zeros(12 * 4096 * 3072 / 8);
-    ifstream rawFile(test12, ios::binary | ios::in);
-    if(!rawFile.is_open())
-        cout<<"Error reading RAW12 file"<<endl;
-    else
-        rawFile.read(raw12Data, 12 * 4096 * 3072 / 8);
-    rawFile.close();
-    mlv_vidf_hdr_t vidf_hdr = {0};
-    Populatevidf(&vidf_hdr);
-
-    int marker = 233;
-    cout << "Generating Frames\n";
-    for (int i = 0; i < framesCount; i++) {
-        vidf_hdr.frameNumber = i;
-        vidf_hdr.timestamp = (i+3)*100000;
-        frames.write(reinterpret_cast<char *>(&marker), sizeof(int));
-        frames.write(reinterpret_cast<char *>(&vidf_hdr), sizeof(vidf_hdr));
-        cout<<"["<<VIDF_FRAMESIZE<<"]";
-        frames.write(raw12Data, VIDF_FRAMESIZE);
-        cout << ".. Of " << framesCount << " written " << i + 1<<endl;
-    }
-    cout << endl;
-
-    // Meta file generation
-
-    mlv_file_hdr_t file_hdr = {0};
-    Populatefile(&file_hdr);
-    mlv_rawi_hdr_t rawi_hdr = {0};
-    Populaterawi(&rawi_hdr);
-
-    mlv_expo_hdr_t expo_hdr = {0};
-    Populateexpo(&expo_hdr);
-    mlv_lens_hdr_t lens_hdr = {0};
-    Populatelens(&lens_hdr);
-    mlv_rtci_hdr_t rtci_hdr = {0};
-    Populatertci(&rtci_hdr);
-
-    cout << "Generating Meta ";
-    meta<<233;
-    meta.write(reinterpret_cast<char *>(&file_hdr), sizeof(mlv_file_hdr_t));
-    meta<<233;
-    meta.write(reinterpret_cast<char *>(&rawi_hdr), sizeof(mlv_rawi_hdr_t));
-    //meta.write(reinterpret_cast<char *>(&rawi_hdr.raw_info), sizeof(raw_info_t));
-    meta<<233;
-    meta.write(reinterpret_cast<char *>(&expo_hdr), sizeof(mlv_expo_hdr_t));
-    meta<<233;
-    meta.write(reinterpret_cast<char *>(&lens_hdr), sizeof(mlv_lens_hdr_t));
-    meta<<233;
-    meta.write(reinterpret_cast<char *>(&rtci_hdr), sizeof(mlv_rtci_hdr_t));
-    cout << "done" << endl;
-
-    frames.close();
-    meta.close();
-
-    cout << "Generator ends, stream files written." << endl;
-
+    cout << "Begin preparing videoframe stream (high speed)" << endl;
+    prepare_frames();
+    cout << "End preparing videoframe stream (high speed)" << endl;
     return 0;
 }
 
-void Populatefile(mlv_file_hdr_t *block) {
-    memcpy(reinterpret_cast<char *>(&(block->fileMagic)), "MLVI", 4);
-    memcpy(reinterpret_cast<char *>(&(block->versionString)), "v2.0", 5);
-    block->blockSize = 52;
-    block->fileGuid = 0; // TODO: Add fileGuid
-    block->fileNum = 0;
-    block->fileCount = 1;
-    block->fileFlags = 0;
-    block->videoClass = 1;
-    block->audioClass = 0;
-    block->videoFrameCount = 0; // Autodetect
-    block->audioFrameCount = 0;
-    block->sourceFpsNom = 30;
-    block->sourceFpsDenom = 1; // Using 30fps video
+void prepare_frames() {
+    string raw12_frame[FRAMECOUNT] = {"../camera_internals/frame/Intern.raw12",
+                                      "../camera_internals/frame/ClippedWall.raw12",
+                                      "../camera_internals/frame/IT8Chart15ms.raw12"};
+    string high_speed_data = "../processed_data/cam_framedata.rawdata";
+    ofstream output(high_speed_data, ios::binary | ios::trunc | ios::out);
+
+    if (!output.is_open()) {
+        cerr << "Error: Cannot open the following file(s): ";
+        cerr <<  high_speed_data << endl;
+        cerr << "Generator exiting. Advised rerun after \"mkdir processed_data\"" << endl;
+        exit(1);
+    }
+
+    mlv_vidf_hdr_t vidf_hdr = {0};
+    popl_vidf(&vidf_hdr);
+
+    auto *raw = new uint8_t[VIDFRAMESIZE];
+    auto *list_of_values = new uint16_t[4096 * 3072];
+    auto *dst = new uint16_t[VIDFRAMESIZE / 2];
+
+    for (int i = 0; i < FRAMECOUNT; i++) {
+        cout << "Frame: Reading to encode: " << raw12_frame[i] << endl;
+        ifstream raw12file(raw12_frame[i], ios::in | ios::binary);
+
+        if (!raw12file.is_open()) {
+            cerr << "Error: Cannot open the following file(s): ";
+            cerr << raw12_frame[i] << endl;
+            cerr << "Generator exiting. Check if this file is accessible." << endl;
+            exit(1);
+        }
+
+        raw12file.read((char *) raw, VIDFRAMESIZE);
+        raw12file.close();
+
+        int pos_list = 0, pos_raw = 0;
+        for (pos_raw = 0; pos_raw < 4096 * 3072 * 12 / 8; pos_raw += 3) {
+            list_of_values[pos_list] = ((uint16_t) raw[pos_raw] << 4) | (raw[pos_raw + 1] & 0xF0) >> 4;
+            pos_list++;
+            list_of_values[pos_list] = ((uint16_t) (raw[pos_raw + 1] & 0x0F) << 8) | (raw[pos_raw + 2]);
+            pos_list++;
+        }
+
+        for (int j = 0; j < 4092 * 3072; j++)
+            bitinsert(dst, j, 12, list_of_values[i]);
+
+        output.write(reinterpret_cast<char *>(&vidf_hdr), sizeof(vidf_hdr));
+        output.write(reinterpret_cast<char *>(dst), VIDFRAMESIZE);
+    }
+
+    output.close();
+    delete raw;
+    delete list_of_values;
+    delete dst;
 }
 
-void Populaterawi(mlv_rawi_hdr_t *block) {
-    memcpy(reinterpret_cast<char *>(&(block->blockType)), "RAWI", 4);
-    block->blockSize = 20 + sizeof(raw_info_t);
-    block->timestamp = 0;
-    block->xRes = 4096;
-    block->yRes = 3072;
-    Populaterawinfot(&(block->raw_info));
+void prepare_meta() {
+    string low_speed_data = "../processed_data/cam_metadata.rawinfo";
+    ofstream output(low_speed_data, ios::binary | ios::out);
+
+    if (!output.is_open()) {
+        cerr << "Error: Cannot open the following file(s): ";
+        cerr << low_speed_data << endl;
+        cerr << "Generator exiting. Advised rerun after \"mkdir processed_data\"" << endl;
+        exit(1);
+    }
+
+    mlv_file_hdr_t file_hdr = {0};
+    mlv_rawi_hdr_t rawi_hdr = {0};
+    mlv_rtci_hdr_t rtci_hdr = {0};
+    mlv_expo_hdr_t expo_hdr = {0};
+    mlv_idnt_hdr_t idnt_hdr = {0};
+    mlv_lens_hdr_t lens_hdr = {0};
+    mlv_wbal_hdr_t wbal_hdr = {0};
+
+    popl_file(&file_hdr);
+    popl_rawi(&rawi_hdr);
+    popl_rtci(&rtci_hdr);
+    popl_expo(&expo_hdr);
+    popl_idnt(&idnt_hdr);
+    popl_lens(&lens_hdr);
+    popl_wbal(&wbal_hdr);
+
+    output.write(reinterpret_cast<char *>(&file_hdr), sizeof(file_hdr));
+    output.write(reinterpret_cast<char *>(&rawi_hdr), sizeof(rawi_hdr));
+    output.write(reinterpret_cast<char *>(&rtci_hdr), sizeof(rtci_hdr));
+    output.write(reinterpret_cast<char *>(&expo_hdr), sizeof(expo_hdr));
+    output.write(reinterpret_cast<char *>(&idnt_hdr), sizeof(idnt_hdr));
+    output.write(reinterpret_cast<char *>(&lens_hdr), sizeof(lens_hdr));
+    output.write(reinterpret_cast<char *>(&wbal_hdr), sizeof(wbal_hdr));
+
+    output.close();
 }
 
-void Populatevidf(mlv_vidf_hdr_t *block) {
-    memcpy(reinterpret_cast<char *>(&(block->blockType)), "VIDF", 4);
-    block->blockSize = sizeof(mlv_vidf_hdr_t) + VIDF_FRAMESIZE; // Check if it is correct (header size or header + frame size)
-    block->timestamp = 0;
-    block->frameNumber = 0;
-    block->cropPosX = 0;
-    block->cropPosY = 0;
-    block->panPosX = 4096;
-    block->panPosY = 3072;
-    block->frameSpace = 0;
-}
+void bitinsert(uint16_t *dst, int position, int depth, uint16_t new_value) {
+    uint16_t old_value = 0;
+    int dst_pos = position * depth / 16;
+    int bits_to_left = ((depth * position) - (16 * dst_pos)) % 16;
+    int shift_right = 16 - depth - bits_to_left;
 
-void Populateexpo(mlv_expo_hdr_t *block) {
-    memcpy(reinterpret_cast<char *>(&(block->blockType)), "EXPO", 4);
-    block->blockSize = 40;
-    block->timestamp = 0;
-    block->isoMode = 0;
-    block->isoValue = 400;
-    block->isoAnalog = 800;
-    block->digitalGain = 1;
-    block->shutterValue = 250;
-}
+    old_value = dst[dst_pos];
+    if (shift_right >= 0) {
+        /* this case is a bit simpler. the word fits into this uint16_t */
+        uint16_t mask = ((1 << depth) - 1) << shift_right;
 
-void Populatelens(mlv_lens_hdr_t *block) {
-    memcpy(reinterpret_cast<char *>(&(block->blockType)), "LENS", 4);
-    block->blockSize = 96;
-    block->timestamp = 0;
-    block->focalLength = 35;
-    block->focalDist = 65535;
-    block->aperture = 350;
-    block->stabilizerMode = 0;
-    block->autofocusMode = 1;
-    block->flags = 0;
-    block->lensID = 0x4FFAE214;
-    strcpy(reinterpret_cast<char *>(&(block->lensName)), "Tamron Di LD Macro 1:2");
-    strcpy(reinterpret_cast<char *>(&(block->lensSerial)), "TMR_AXFF60213F2");
-}
+        /* shift and mask out */
+        new_value <<= shift_right;
+        new_value &= mask;
+        old_value &= ~mask;
 
-void Populatertci(mlv_rtci_hdr_t *block){
-    memcpy(reinterpret_cast<char *>(&(block->blockType)), "RTCI", 4);
-    block->blockSize = sizeof(mlv_rtci_hdr_t);
-    block->timestamp = 1;
-    block->tm_sec = 4;
-    block->tm_min = 55;
-    block->tm_hour = 4;
-    block->tm_mday = 8;
-    block->tm_mon = 6;
-    block->tm_year = 118;
-    block->tm_wday = 0;
-    block->tm_yday = 188;
-    block->tm_isdst = 0;
-    block->tm_gmtoff = 0;
-    memcpy(reinterpret_cast<char *>(&(block->tm_zone)), "GRNWICH", 8);
-}
+        /* now combine */
+        new_value |= old_value;
+        dst[dst_pos] = new_value;
+    } else {
+        /* here we need two operations as the bits are split over two words */
+        uint16_t mask1 = ((1 << (depth + shift_right)) - 1);
+        uint16_t mask2 = ((1 << (-shift_right)) - 1) << (16 + shift_right);
 
-char *Zeros(int size) {
-    char *ret = new char[size];
-    for (int i = 0; i < size; i++)
-        ret[i] = 0;
-    return ret;
-}
+        /* write the upper bits */
+        old_value &= ~mask1;
+        old_value |= (new_value >> (-shift_right)) & mask1;
+        dst[dst_pos] = old_value;
 
-void Populaterawinfot(raw_info_t *block){
-    block->api_version = 0x0000001;
-    block->height = 3072;
-    block->width = 4092;
-    block->bits_per_pixel = 12;
-    block->pitch = (block->width*12)/8;
-    block->frame_size = block->height*block->pitch;
-    block->black_level = 0;
-    block->white_level = 15000;
-    block->crop.origin[0] = block->crop.origin[1] = 0;
-    block->crop.size[0] = 4096;
-    block->crop.size[1] = 3072;
-    block->exposure_bias[0] = block->exposure_bias[1] = 0;
-    block->cfa_pattern = 0x02010100;
-    block->calibration_illuminant1 = 0;
-    block->dng_active_area[0] = 0;
-    block->dng_active_area[1] = 0;
-    block->dng_active_area[2] = 3072;
-    block->dng_active_area[3] = 4096;
-    block->dynamic_range = 12;
-    for(int i=0; i<18; i++)
-        block->color_matrix1[i] = i*100;
+        /* write the lower bits */
+        old_value = dst[dst_pos + 1];
+        old_value &= ~mask2;
+        old_value |= (new_value << (16 + shift_right)) & mask2;
+        dst[dst_pos + 1] = old_value;
+    }
 }

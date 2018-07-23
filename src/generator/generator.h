@@ -1,33 +1,18 @@
 //
-// Copyright 2018, Supragya Raj
-// licensed under MIT License (for RawStreamHandler).
+// Created by supragya on 12/7/18.
 //
 
-#ifndef GENERATOR_H
-#define GENERATOR_H
+#ifndef MLV2DNG_MAIN_H
+#define MLV2DNG_MAIN_H
 
-#include <fstream>
-#include <string>
 #include "../common/mlv.h"
+#include <string>
+#include <stdint-gcc.h>
 
-using namespace std;
+void prepare_frames();
 
-void Populatevidf(mlv_vidf_hdr_t *);
+void prepare_meta();
 
-void Populaterawi(mlv_rawi_hdr_t *);
+void bitinsert(uint16_t *dst, int position, int depth, uint16_t new_value);
 
-void Populatefile(mlv_file_hdr_t *);
-
-void Populatelens(mlv_lens_hdr_t *);
-
-void Populateexpo(mlv_expo_hdr_t *);
-
-void Populaterawinfot(raw_info_t *);
-
-void Populatertci(mlv_rtci_hdr_t *);
-
-char *Zeros(int size);
-
-#endif
-
-// cout << "\r\tProgress: ";
+#endif //MLV2DNG_MAIN_H

@@ -1,6 +1,6 @@
 # Raw Video Container Format - GSoC 2018
 
-## Emulation - Stream Handling from AXIOM Beta
+This repository hosts a variety of
 
 ### Usage
 - Clone the git repo to your local machine
