@@ -8,7 +8,7 @@ read -p "Want to use the script? [yes/no]: " choice;
 echo ""
 
 if [[ "$choice" == "yes" ]]; then
-    echo "STATUS: Doing project cleanup."
+    echo "STATUS: Getting dependencies."
     sudo apt-get install build-essential libfuse-dev darktable cmake
 else
     echo "STATUS: You chose not to use the script."
