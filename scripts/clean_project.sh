@@ -11,7 +11,7 @@ echo ""
 
 if [[ "$choice" == "yes" ]]; then
     echo "STATUS: Doing project cleanup."
-    sudo rm -r cmake-build-debug processed_data bin .idea &> /dev/null
+    sudo rm -r cmake-build-debug processed_data bin build .idea &> /dev/null
     echo "STATUS: Done. Project clean."
 else
     echo "STATUS: You chose not to use the script."

@@ -24,7 +24,10 @@ void prepare_frames() {
                                       "../camera_internals/frame/ClippedWall.raw12",
                                       "../camera_internals/frame/IT8Chart15ms.raw12"};
     string high_speed_data = "../processed_data/cam_framedata.rawdata";
-    ofstream output(high_speed_data, ios::binary | ios::trunc | ios::out);
+
+    ofstream output;
+    output.rdbuf()->pubsetbuf(0, 0);
+    output.open(high_speed_data, ios::binary | ios::out);
 
     if (!output.is_open()) {
         cerr << "Error: Cannot open the following file(s): ";
@@ -38,7 +41,7 @@ void prepare_frames() {
 
     auto *raw = new uint8_t[VIDFRAMESIZE];
     auto *list_of_values = new uint16_t[4096 * 3072];
-    auto *dst = new uint16_t[VIDFRAMESIZE / 2];
+    uint16_t *dst = new uint16_t[VIDFRAMESIZE / 2];
 
     for (int i = 0; i < FRAMECOUNT; i++) {
         cout << "Frame: Reading to encode: " << raw12_frame[i] << endl;
@@ -63,7 +66,12 @@ void prepare_frames() {
         }
 
         for (int j = 0; j < 4092 * 3072; j++)
-            bitinsert(dst, j, 12, list_of_values[i]);
+            bitinsert(dst, j, 12, list_of_values[j]);
+
+        cout<<"A few initial values for "<<raw12_frame[i]<<endl;
+        for(int j=0; j<10; j++)
+            cout<<dst[j]<<" ";
+        cout<<endl;
 
         output.write(reinterpret_cast<char *>(&vidf_hdr), sizeof(vidf_hdr));
         output.write(reinterpret_cast<char *>(dst), VIDFRAMESIZE);
