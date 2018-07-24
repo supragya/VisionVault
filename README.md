@@ -11,7 +11,7 @@ GSoC project: [https://summerofcode.withgoogle.com/projects/#4617058810068992](h
 The source code compiles a few binaries and runs them to emulate the usage scenario of the camera. The following are some
 important modules:
 
-1. **Generator**: This compiles two files - rawinfo and rawdata files that models the two streams coming out
+1. **Generator**: This compiles two files - rawinfo and rawdata that models the two streams coming out
 of the camera - rawdata being the high speed video frame transport and rawinfo being low speed meta transport.
 2. **Stream Handler**: This application models the primary interface code for the recording unit. Uses two threads to
 store two streams on disk as fast as it can. Highly I/O based application with very little processing involved.
@@ -23,10 +23,10 @@ files.
 
 1, 2 and 3 model the `cam2mlv` portion of the system while 4 is solely responsible for `mlv2dng` conversion.
 
-A few changes to `mlv2dng` is proposed for
+A few changes to `mlv2dng` are proposed for
 
-- Removing the Joiner systems
-- Allowing PLR data to be used while conversion.
+- Removing the Joiner altogether
+- Allowing PLR data to be used for linearization table calculations while mlv2dng conversion.
 
 The information regarding the above proposals are given at: [gsoc.supragyaraj.com](gsoc.supragyaraj.com)
 
