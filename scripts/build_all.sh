@@ -22,7 +22,7 @@ if [[ "$choice" == "yes" ]]; then
     cp build/src/stream_handler/StreamHandler bin/
     echo "Removing build directory..."
     sudo rm -r build/
-    echo "STATUS: Compiled and setup successfully"
+    mkdir processed_data
 else
     echo "STATUS: You chose not to use the script."
 fi

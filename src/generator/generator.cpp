@@ -68,11 +68,7 @@ void prepare_frames() {
         for (int j = 0; j < 4092 * 3072; j++)
             bitinsert(dst, j, 12, list_of_values[j]);
 
-        cout<<"A few initial values for "<<raw12_frame[i]<<endl;
-        for(int j=0; j<10; j++)
-            cout<<dst[j]<<" ";
-        cout<<endl;
-
+        vidf_hdr.frameNumber = i;
         output.write(reinterpret_cast<char *>(&vidf_hdr), sizeof(vidf_hdr));
         output.write(reinterpret_cast<char *>(dst), VIDFRAMESIZE);
     }
